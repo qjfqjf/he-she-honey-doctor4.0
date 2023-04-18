@@ -29,7 +29,11 @@
             "OAuth" : {},
             "Messaging" : {},
             "VideoPlayer" : {},
-            "Share" : {}
+            "Share" : {},
+            "Barcode" : {},
+            "Bluetooth" : {},
+            "Camera" : {},
+            "Geolocation" : {}
         },
         "distribute" : {
             "apple" : {
@@ -76,11 +80,19 @@
             "sdkConfigs" : {
                 "ad" : {},
                 "maps" : {},
-                "share" : {}
+                "share" : {},
+                "geolocation" : {
+                    "system" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                }
             },
             "splashscreen" : {
                 "iosStyle" : "storyboard",
                 "androidStyle" : "common"
+            },
+            "ios" : {
+                "dSYMs" : false
             }
         },
         "compilerVersion" : 3,
