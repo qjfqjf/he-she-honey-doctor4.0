@@ -49,15 +49,10 @@ export default {
 					"text": "消息"
 				},
 				{
-					iconPath: 'static/icon/tab/icon_phone_c.png',
-					text: '',
-					raised: true
-				},
-				{
 					"pagePath": "pages/serve/common",
 					"iconPath": "static/icon/tab/icon_service.png",
 					"selectedIconPath": "static/icon/tab/icon_service_c.png",
-					"text": "社区"
+					"text": "绩效"
 				},
 
 				{

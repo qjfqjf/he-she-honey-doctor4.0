@@ -1,7 +1,7 @@
 export const wisperImage= [
+	'/static/icon/homePage/swiperImg2.png',
     '/static/icon/homePage/swiperImg1.png',
-    'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-    'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+	'/static/icon/homePage/swiperImg4.png',
 ]
 export const   appManage= [
     {
@@ -9,46 +9,45 @@ export const   appManage= [
         icon: "/static/icon/homePage/healthMonitor.png",
         path: "/pages/healthMonitor/index"
     },
+	{
+	    name: "健康评估",
+	    icon: "/static/icon/homePage/healthAssessment.png",
+	    path: "/pages/supervision/index"
+	},
+	{
+	    name: "诊断/调理",
+	    icon: "/static/icon/homePage/HealthAdvisory.png",
+	    path: "/pages/ai/index"
+	},
+	{
+	    name: "AI智能",
+	    icon: "/static/icon/homePage/healthMonitor.png",
+	    path: "/pages/professionalCommunity/index"
+	},
     {
-        name: "健康档案",
+        name: "专业社区",
         icon: "/static/icon/homePage/healthRecords.png",
         path: "/pages/healthFile/index"
     },
     {
-        name: "健康管理",
-        icon: "/static/icon/homePage/healthManagement.png",
-        path: "/pages/healthAssessment/index"
+        name: "工单统筹",
+        icon: "/static/icon/homePage/applicationService.png",
+        path: "/pages/employer/index"
     },
+
     {
-        name: "健康评估",
-        icon: "/static/icon/homePage/healthAssessment.png",
-        path: "/pages/supervision/index"
-    },
-    {
-        name: "数据分析",
+        name: "监管预警",
         icon: "/static/icon/homePage/dataAnalysis.png",
         path: "/pages/treat/index"
     },
+
     {
-        name: "健康咨询",
-        icon: "/static/icon/homePage/HealthAdvisory.png",
-        path: "/pages/ai/index"
-    },
-    {
-        name: "健康教育",
+        name: "教育/培训",
         icon: "/static/icon/homePage/educate.png",
         path: "/pages/educate/index"
     },
-    {
-        name: "远程监控",
-        icon: "/static/icon/homePage/healthMonitor.png",
-        path: "/pages/professionalCommunity/index"
-    },
-    {
-        name: "申请服务",
-        icon: "/static/icon/homePage/applicationService.png",
-        path: "/pages/employer/index"
-    }
+
+
 
 
 ]
@@ -79,7 +78,32 @@ export const  appFeature= [
         name: "美容",
         icon: "static/icon/homePage/cosmetic.png",
         path: "/pages/educate/index"
-    }]
+    }],
+	[{
+	    name: "健身",
+	    icon: "static/icon/homePage/jianshen.png",
+	    path: "/pages/educate/index"
+	},
+	{
+	    name: "养老",
+	    icon: "static/icon/homePage/yanglao.png",
+	    path: "/pages/educate/index"
+	},
+	{
+	    name: "助残",
+	    icon: "static/icon/homePage/zhucan.png",
+	    path: "/pages/educate/index"
+	},
+	{
+	    name: "商城",
+	    icon: "static/icon/homePage/shangcheng.png",
+	    path: "/pages/educate/index"
+	},
+	{
+	    name: "直播",
+	    icon: "static/icon/homePage/zhibo.png",
+	    path: "/pages/educate/index"
+	}]
 ]
 export const homePageIcons = {
     Scanning:{

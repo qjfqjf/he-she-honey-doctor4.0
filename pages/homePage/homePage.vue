@@ -18,7 +18,7 @@
 				</view>
 				<view class="d-flex j-sb a-center">
 					<view class="d-flex j-center a-center">
-						<h3 style="color: red; ">145</h3>
+						<h3 style="color: red; ">123</h3>
 					</view>
 					<h4 class="unit" style="color: red">mmHg</h4>
 				</view>
@@ -36,7 +36,7 @@
 				</view>
 				<view class="d-flex j-sb a-center">
 					<view class="d-flex j-center a-center">
-						<h3 style="color: green">145</h3>
+						<h3 style="color: green">72</h3>
 					</view>
 					<h4 class="unit">mmHg</h4>
 				</view>
@@ -53,24 +53,24 @@
 				</view>
 				<view class="d-flex j-sb a-center">
 					<view class="d-flex j-center a-center">
-						<h3>145</h3>
+						<h3>279</h3>
 					</view>
-					<h4 class="unit">mmHg</h4>
+					<h4 class="unit">μmol/L</h4>
 				</view>
 			</view>
 		</view>
 
 		<view class="top-bar d-flex j-sb w-100 a-center my-2 h-100">
 			<u-button class="leftRoundButton shadow h-100 shadow-lg border">
-				<view class="rounded-circle bg-primary-dark m-1 w-50 h-50 roundButton d-flex a-center j-center"
-					style="background-color: rgb(6,158,193); color: aliceblue;"><span>用户</span></view>
-			</u-button>
+				<view class="rounded-circle bg-success-dark m-1 w-50 h-50 roundButton d-flex a-center j-center"
+					style="background-color: rgb(6,158,193; color: aliceblue;">关闭值班</view>
+			</u-button> 
 			<view class="scrollAvatar">
 				<swiper-list class="list" :list="list" :number="5" @change="switchChange" style="width: 100%;" />
 			</view>
 			<u-button class="rightRoundButton shadow-lg border">
 				<view class="rounded-circle bg-success-dark m-1 w-50 h-50 roundButton d-flex a-center j-center"
-					style="background-color: #18b566; color: aliceblue;">提醒</view>
+					style="background-color: #18b566; color: aliceblue;">我的会员</view>
 			</u-button>
 		</view>
 
@@ -100,7 +100,7 @@
 
 			<u-gap height="10"></u-gap>
 			<view class="m-1 rounded-20 bg-white">
-				<u-grid :border="false" col="3">
+				<u-grid :border="false" col="4">
 					<u-grid-item v-for="(listItem,listIndex) in appManage" :key="listIndex">
 						<navigator :url="listItem.path">
 							<u--image class="appManeger_block_icon" :src="listItem.icon" :customStyle="{paddingLeft:15+'rpx'}" height="100upx" width="100upx">
