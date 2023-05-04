@@ -48,8 +48,8 @@ export default {
 					"selectedIconPath": "static/icon/tab/icon_message_c.png",
 					"text": "消息"
 				},
-				{
-					"pagePath": "pages/serve/common",
+				{ 
+					"pagePath": "pages/performance/common",
 					"iconPath": "static/icon/tab/icon_service.png",
 					"selectedIconPath": "static/icon/tab/icon_service_c.png",
 					"text": "绩效"

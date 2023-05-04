@@ -683,9 +683,9 @@
     }
 
     , {
-      "path": "pages/serve/common",
+      "path": "pages/performance/common",
       "style": {
-        "navigationBarTitleText": "健康服务",
+        "navigationBarTitleText": "绩效",
         "enablePullDownRefresh": false
       }
     },
@@ -1022,9 +1022,16 @@
         "enablePullDownRefresh": false
       }
     }
-
-
-  ],
+      ,{
+            "path" : "pages/homePage/myMembers",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 
   "globalStyle": {
     "navigationBarTextStyle": "black",
@@ -1051,10 +1058,10 @@
         "text": "消息"
       },
       {
-        "pagePath": "pages/serve/common",
+        "pagePath": "pages/performance/common",
         "iconPath": "static/icon/tab/icon_service.png",
         "selectedIconPath": "static/icon/tab/icon_service_c.png",
-        "text": "服务"
+        "text": "绩效"
       },
       {
         "pagePath": "pages/mine/common",

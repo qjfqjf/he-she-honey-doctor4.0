@@ -6,20 +6,26 @@
 			bgColor="#fff"
 		></u-gap>
 		<!-- 公共组件-每个页面必须引入 -->
-		<public-module></public-module>
+		<public-module></public-module>  
 		<u-cell-group>
-			<u-cell size="large" class="message" icon="account" url="/pages/mine/editInfo" title="我的资料"></u-cell>
-			<u-cell size="large" class="message" icon="list-dot" url="/pages/mine/myDevice" title="我的设备"></u-cell>
-			<u-cell size="large" class="message" icon="rmb-circle" url="/pages/mine/myPoints" title="我的积分"></u-cell>
-			<u-cell size="large" class="message" icon="chat" url="/pages/mine/myComment" title="我的评价"></u-cell>	
-			<u-cell size="large" class="message" icon="file-text" url="/pages/mine/order" title="订单记录"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/my.png" url="/pages/mine/editInfo" title="我的资料"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/execution.png" url="" title="执业信息(必填)"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/personalProfile.png" url="" title="个人简介"></u-cell>
 		</u-cell-group>
 		<u-gap
 			height="10"
 		></u-gap>
+		<u-cell-group> 
+			<u-cell size="large" class="message" icon="../../static/icon/integral/mydevice.png" url="/pages/mine/myDevice" title="我的设备"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/myservice.png" url="" title="我的服务"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/exchange.png" url="/pages/mine/myComment" title="我的评价"></u-cell>	
+		</u-cell-group>
+		<u-gap
+			height="10" 
+		></u-gap>
 		<u-cell-group>
-			<u-cell size="large" class="message" icon="setting" url="/pages/mine/setting" title="设置"></u-cell>
-			<u-cell size="large" class="message" icon="bell" url="/pages/mine/help" title="帮助"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/setting.png" url="/pages/mine/setting" title="设置"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/help.png" url="/pages/mine/help" title="帮助"></u-cell>
 		</u-cell-group>	
 		<u-gap
 			height="50"

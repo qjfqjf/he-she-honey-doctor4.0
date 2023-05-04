@@ -21,7 +21,7 @@ export const   appManage= [
 	},
 	{
 	    name: "AI智能",
-	    icon: "/static/icon/homePage/healthMonitor.png",
+	    icon: "/static/icon/homePage/AI.png",
 	    path: "/pages/professionalCommunity/index"
 	},
     {
@@ -37,7 +37,7 @@ export const   appManage= [
 
     {
         name: "监管预警",
-        icon: "/static/icon/homePage/dataAnalysis.png",
+        icon: "/static/icon/homePage/fengxian.png", 
         path: "/pages/treat/index"
     },
 

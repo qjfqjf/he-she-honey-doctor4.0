@@ -5,76 +5,19 @@
 			<img slot="left" :src="homePageIcons.Scanning.icon" class="small-icon p-2" alt=""></img>
 			<img slot="right" :src="homePageIcons.Location.icon" class="small-icon p-2" alt=""></img>
 		</z-nav-bar>
-		<view class="status-bar d-flex m-3 bg-white rounded-20">
-			<view class="f-grow-1 flex-column h-50 px-2 py-1">
-				<view class="d-flex j-sb a-center">
-					<div class="d-flex j-center a-center ">
-						<img :src="homePageIcons.Bp.icon" class="medium-icon" alt="">
-						<span class="mx-1">
-							<h4 style="font-size: 30upx">高压</h4>
-						</span>
-					</div>
-					<img :src="homePageIcons.ArrowUp.icon" style="width: 20upx" height="10upx" alt="">
-				</view>
-				<view class="d-flex j-sb a-center">
-					<view class="d-flex j-center a-center">
-						<h3 style="color: red; ">123</h3>
-					</view>
-					<h4 class="unit" style="color: red">mmHg</h4>
-				</view>
-			</view>
-
-			<view class="f-grow-1 flex-column h-50 px-2 py-1">
-				<view class="d-flex j-sb a-center">
-					<div class="d-flex j-center a-center">
-						<img :src="homePageIcons.Glu.icon" class="medium-icon" alt="">
-						<span class="mx-1">
-							<h4 style="font-size: 30upx">低压</h4>
-						</span>
-					</div>
-					<img :src="homePageIcons.ArrowDown.icon" style="width: 20upx" height="10upx" alt="">
-				</view>
-				<view class="d-flex j-sb a-center">
-					<view class="d-flex j-center a-center">
-						<h3 style="color: green">72</h3>
-					</view>
-					<h4 class="unit">mmHg</h4>
-				</view>
-			</view>
-
-			<view class="f-grow-1 flex-column h-50 px-2 py-1">
-				<view class="d-flex j-sb a-center">
-					<div class="d-flex j-center a-center">
-						<img :src="homePageIcons.UricAcid.icon" class="medium-icon" alt="">
-						<span class="mx-1">
-							<h4 style="font-size: 30upx">血尿酸</h4>
-						</span>
-					</div>
-				</view>
-				<view class="d-flex j-sb a-center">
-					<view class="d-flex j-center a-center">
-						<h3>279</h3>
-					</view>
-					<h4 class="unit">μmol/L</h4>
-				</view>
-			</view>
-		</view>
-
+		
 		<view class="top-bar d-flex j-sb w-100 a-center my-2 h-100">
-			<u-button class="leftRoundButton shadow h-100 shadow-lg border">
-				<view class="rounded-circle bg-success-dark m-1 w-50 h-50 roundButton d-flex a-center j-center"
-					style="background-color: rgb(6,158,193; color: aliceblue;">关闭值班</view>
-			</u-button> 
-			<view class="scrollAvatar">
-				<swiper-list class="list" :list="list" :number="5" @change="switchChange" style="width: 100%;" />
-			</view>
-			<u-button class="rightRoundButton shadow-lg border">
-				<view class="rounded-circle bg-success-dark m-1 w-50 h-50 roundButton d-flex a-center j-center"
-					style="background-color: #18b566; color: aliceblue;">我的会员</view>
+			<u-button class="leftRoundButton border" color="#18b566">关闭值班
 			</u-button>
+			<view class="Avatar">
+				<u-avatar :src="avatar" size="40"></u-avatar>
+				<view style="font-size: 26upx; font-weight: bold;">{{ name }}</view>
+			</view>
+			<u-button class="rightRoundButton h-100 border" @click="navto" color="#18b566">我的会员
+			</u-button> 
 		</view>
 
-		<view class=" p-1">
+		<view class="swiper">
 			<view class="w-100 rounded-20 " style="background-color: white">
 				<swiper :indicator-dots="true" class="swiper">
 					<swiper-item v-for="(page,index) in appFeature" :key="index">
@@ -93,17 +36,17 @@
 		</view>
 		<!-- <u-swiper class="swiper mx-1" :list="wisperImage" previousMargin="30" nextMargin="30" circular :autoplay="false"
 			radius="5" bgColor="#ffffff"></u-swiper> -->
-		<u-swiper class=" m-1" :list="wisperImage" indicator indicatorMode="line" circular :autoplay="false"
+		<u-swiper class=" m-1" :list="wisperImage" indicator indicatorMode="line" circular
 			radius="5" bgColor="#ffffff">
 		</u-swiper>
-		<view class="m-1 rounded-20 bg-white pb-3">
+		<view class="m-1 rounded-20 bg-white"> 
 
-			<u-gap height="10"></u-gap>
+			<u-gap height="10"></u-gap> 
 			<view class="m-1 rounded-20 bg-white">
 				<u-grid :border="false" col="4">
 					<u-grid-item v-for="(listItem,listIndex) in appManage" :key="listIndex">
-						<navigator :url="listItem.path">
-							<u--image class="appManeger_block_icon" :src="listItem.icon" :customStyle="{paddingLeft:15+'rpx'}" height="100upx" width="100upx">
+						<navigator :url="listItem.path" class="nav">
+							<u--image class="appManeger_block_icon" :src="listItem.icon"  height="90upx" width="90upx">
 							</u--image>
 							<u--text :text="listItem.name" align="center"></u--text>
 						</navigator>
@@ -134,14 +77,15 @@
 			home() {
 				return home
 			}
-		},
+		}, 
 		data() {
 			return {
 				wisperImage,
-				appManage,
+				appManage, 
 				appFeature,
-				homePageIcons
-
+				homePageIcons,
+				avatar: 'https://cdn.uviewui.com/uview/album/1.jpg',
+				name: '平台管理员',
 			};
 		},
 		components: {
@@ -163,6 +107,11 @@
 		methods: {
 			switchChange() {
 
+			},
+			navto() {
+				uni.navigateTo({
+					url: "/pages/homePage/myMembers"
+				});
 			},
 			onPageJump(url) {
 				uni.navigateTo({
@@ -229,24 +178,24 @@
 
 	.statusBar {
 		border-radius: 30%;
-		background-color: white;
+		background-color: white; 
+
 	}
 
 	.leftRoundButton {
-		height: 120upx;
-		width: 160upx;
+		height: 100upx;
+		width: 180upx;
 		border-bottom-right-radius: 50px;
 		border-top-right-radius: 50px;
-		background-color: rgba(255, 255, 255, 0.5);
+		font-size: 15px;
 	}
 
 	.rightRoundButton {
-		height: 120upx;
-		width: 160upx;
+		height: 100upx;
+		width: 180upx;
 		border-bottom-left-radius: 50px;
 		border-top-left-radius: 50px;
-		background-color: rgba(255, 255, 255, 0.5);
-
+		font-size: 15px;
 	}
 
 	.roundButton {
@@ -254,11 +203,21 @@
 		width: 80upx;
 	}
 
-	.scrollAvatar {
+	.Avatar {
 		width: 50%;
 		height: 80upx;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
+	.nav{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 	.appFeature {
 		border-radius: 50px;
 		padding: 10px;
