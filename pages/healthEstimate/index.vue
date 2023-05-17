@@ -10,7 +10,7 @@
       <u-grid :border="false" col="4">
         <u-grid-item class="item" v-for="(baseListItem,baseListIndex) in baseList" :key="baseListIndex"
           @click="click(baseListItem.url,baseListItem.title)">
-          <image style="width: 60rpx; height: 60rpx;" :src="baseListItem.img" mode="aspectFit"></image>
+          <image style="width: 80rpx;height: 80rpx;" :src="baseListItem.img" mode="aspectFit"></image>
           <text class="grid-text mt-2">{{baseListItem.title}}</text>
         </u-grid-item>
       </u-grid>
@@ -24,44 +24,44 @@
     data() {
       return {
         baseList: [{
-            img: require('@/static/icon/healthAssessment/emotionalCognition.png'),
+            img: require('@/static/icon/healthEstimate/emotion.png'),
             title: '情绪认知',
-            url: '/pages/healthAssessment/emotionalCognition/emotionalCognition'
+            url: '/pages/healthEstimate/emotion/emotion'
           },
           {
-            img: require('@/static/icon/healthAssessment/chineseMedicineConstitution.png'),
+            img: require('@/static/icon/healthEstimate/constitution.png'),
             title: '中医体质',
-            url: '/pages/healthAssessment/chineseMedicineConstitution/chineseMedicineConstitution'
+            url: '/pages/healthEstimate/constitution/constitution'
           },
           {
-            img: require('@/static/icon/healthAssessment/psychologicalAssessment.png'),
+            img: require('@/static/icon/healthEstimate/psychology.png'),
             title: '心理测评',
-            url: '/pages/healthAssessment/psychologicalAssessment/psychologicalAssessment'
+            url: '/pages/healthEstimate/psychology/psychology'
           },
           {
-            img: require('@/static/icon/healthAssessment/healthAssessment.png'),
+            img: require('@/static/icon/healthEstimate/health.png'),
             title: '健康测评',
-            url: '/pages/healthAssessment/healthAssessment/healthAssessment'
+            url: '/pages/healthEstimate/health/health'
           },
           {
-            img: require('@/static/icon/healthAssessment/infraredAssessment.png'),
+            img: require('@/static/icon/healthEstimate/infrared.png'),
             title: '红外测评',
-            url: '/pages/healthAssessment/infraredAssessment/infraredAssessment'
+            url: '/pages/healthEstimate/infrared/infrared'
           },
           {
-            img: require('@/static/icon/healthAssessment/brainWaveAssessment.png'),
+            img: require('@/static/icon/healthEstimate/brain.png'),
             title: '脑波测评',
-            url: '/pages/healthAssessment/brainWaveAssessment/brainWaveAssessment'
+            url: '/pages/healthEstimate/conditioning/psychology'
           },
           {
-            img: require('@/static/icon/healthAssessment/AIAssessment.png'),
-            title: 'AI评估', 
-            url: '/pages/healthAssessment/AIAssessment/AIAssessment'
+            img: require('@/static/icon/healthEstimate/aiHealth.png'),
+            title: 'AI智能评估',
+            url: '/pages/healthEstimate/conditioning/health'
           },
           {
-            img: require('@/static/icon/healthAssessment/assessmentRecord.png'),
+            img: require('@/static/icon/healthEstimate/record.png'),
             title: '评估记录',
-            url: '/pages/healthAssessment/assessmentRecord/assessmentRecord'
+            url: '/pages/healthEstimate/record/record'
           },
         ]
       };
@@ -99,8 +99,8 @@
 
     .devices-warp {
       .item {
-        padding: 18rpx 10rpx;
-        margin: 8rpx;
+        padding: 20rpx;
+        margin: 10rpx;
         width: 160rpx !important;
         border-radius: 16rpx;
         background-color: #fff !important;
@@ -109,8 +109,9 @@
         &:nth-child(4n) {
           margin-right: 0;
         }
+
         .grid-text {
-          font-size: 29rpx;
+          font-size: 25rpx;
         }
       }
     }

@@ -12,12 +12,12 @@ export const   appManage= [
 	{
 	    name: "健康评估",
 	    icon: "/static/icon/homePage/healthAssessment.png",
-	    path: "/pages/supervision/index"
+	    path: "/pages/healthEstimate/index"
 	},
 	{
 	    name: "诊断/调理",
 	    icon: "/static/icon/homePage/HealthAdvisory.png",
-	    path: "/pages/ai/index"
+	    path: "/pages/healthTreatment/index"
 	},
 	{
 	    name: "AI智能",
@@ -32,7 +32,7 @@ export const   appManage= [
     {
         name: "工单统筹",
         icon: "/static/icon/homePage/applicationService.png",
-        path: "/pages/employer/index"
+        path: "/pages/WorkOrderCoordination/WorkOrderCoordination"
     },
 
     {
