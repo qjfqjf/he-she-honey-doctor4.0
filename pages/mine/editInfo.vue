@@ -6,183 +6,90 @@
 		<u-cell-group :border="false" class="message">
 			<u-cell title="基本信息" titleStyle="font-weight: bold; font-size: 16px" :border="false"></u-cell>
 			<u-cell size="large" title="头像" titleStyle="font-size: 14px">
-				<u-avatar 
-					slot="value"
-					:src="avatar"
-				></u-avatar >
+				<u-avatar slot="value" :src="avatar"></u-avatar>
 			</u-cell>
 			<u-cell @click="showNameModal" titleStyle="font-size: 14px" size="large" title="姓名" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ name }}</text>
+				<text slot="value" class="u-slot-value">{{ name }}</text>
 			</u-cell>
 			<u-cell @click="showGenderModal" size="large" titleStyle="font-size: 14px" title="姓别" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ gender }}</text>
+				<text slot="value" class="u-slot-value">{{ gender }}</text>
 			</u-cell>
-			<u-cell @click="showBirthModal" class="message" titleStyle="font-size: 14px" size="large" title="出生日期" :value="birth" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ birth }}</text>
+			<u-cell @click="showBirthModal" class="message" titleStyle="font-size: 14px" size="large" title="出生日期"
+				:value="birth" :isLink="true">
+				<text slot="value" class="u-slot-value">{{ birth }}</text>
+			</u-cell>
+			<!-- 二维码 -->
+			<u-cell class="message" titleStyle="font-size: 14px" size="large" title="二维码名片" :isLink="true">
+				<view slot="value" @click="previewImg">
+					<uqrcode ref="uqrcode" canvas-id="qrcode" :value="qrCodeConfig.value" :size='qrCodeConfig.size'
+						:options="qrCodeConfig.options">
+					</uqrcode>
+				</view>
 			</u-cell>
 		</u-cell-group>
-		<u-gap
-			height="10"
-		></u-gap>
+		<u-gap height="10"></u-gap>
 		<u-cell-group :border="false" class="message">
 			<u-cell size="large" title="身份信息" titleStyle="font-weight: bold;" :border="false"></u-cell>
-			<u-cell @click="showIdCardNumberModel" size="large" title="身份证号" titleStyle="font-size: 14px" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ idCardNumber }}</text>
+			<u-cell @click="showIdCardNumberModel" size="large" title="身份证号" titleStyle="font-size: 14px"
+				:isLink="true">
+				<text slot="value" class="u-slot-value">{{ idCardNumber }}</text>
 			</u-cell>
-			<u-cell size="large" title="亲属关系" titleStyle="font-size: 14px" :isLink="true">
+			<!-- 			<u-cell size="large" title="亲属关系" titleStyle="font-size: 14px" :isLink="true">
 				<text
 					slot="value"
 					class="u-slot-value"
 				>本人</text>
-			</u-cell>
+			</u-cell> -->
 			<u-cell @click="showTelModel" size="large" title="手机号" titleStyle="font-size: 14px" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ tel }}</text>
-			</u-cell>
-		</u-cell-group>	
-		<u-gap
-			height="10"
-		></u-gap>
-		<u-cell-group :border="false" class="message">	
-			<u-cell size="large" title="身体信息" titleStyle="font-weight: bold;" :border="false"></u-cell>
-			<u-cell @click="showHeightModel" size="large" title="身高(cm)" titleStyle="font-size: 14px" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ height }}</text>
-			</u-cell>
-			<u-cell @click="showWeightModel" size="large" title="体重(kg)" titleStyle="font-size: 14px" :isLink="true">
-				<text
-					slot="value"
-					class="u-slot-value"
-				>{{ weight }}</text>
+				<text slot="value" class="u-slot-value">{{ tel }}</text>
 			</u-cell>
 		</u-cell-group>
-			<u-gap
-				height="40"
-			></u-gap>
-			<view class="d-flex j-center">
-				<u-button
-					text="保存"
-					size="large"
-					type="success"
-					shape="circle"
-					color="rgb(10, 185, 156)"
-					style="width: 660rpx; height: 110rpx;"
-				></u-button>
-			</view>
-		
-		<u-modal
-			title="姓名"
-			:show="showName"
-			showCancelButton
-			closeOnClickOverlay
-			confirmColor="rgb(10, 185, 156)"
-			@confirm="confirmName"
-			@cancel="() => showName = false"
-			@close="() => showName = false"
-		>
-		 <u--input
-		    placeholder="请输入姓名"
-		    border="surround"
-		    v-model="nameValue"
-		  ></u--input>
+		<u-gap height="10"></u-gap>
+		<u-cell-group :border="false" class="message">
+			<u-cell size="large" title="身体信息" titleStyle="font-weight: bold;" :border="false"></u-cell>
+			<u-cell @click="showHeightModel" size="large" title="身高(cm)" titleStyle="font-size: 14px" :isLink="true">
+				<text slot="value" class="u-slot-value">{{ height }}</text>
+			</u-cell>
+			<u-cell @click="showWeightModel" size="large" title="体重(kg)" titleStyle="font-size: 14px" :isLink="true">
+				<text slot="value" class="u-slot-value">{{ weight }}</text>
+			</u-cell>
+		</u-cell-group>
+		<u-gap height="40"></u-gap>
+		<view class="d-flex j-center">
+			<u-button text="保存" size="large" type="success" shape="circle" color="rgb(10, 185, 156)"
+				style="width: 660rpx; height: 110rpx;"></u-button>
+		</view>
+
+		<u-modal title="姓名" :show="showName" showCancelButton closeOnClickOverlay confirmColor="rgb(10, 185, 156)"
+			@confirm="confirmName" @cancel="() => showName = false" @close="() => showName = false">
+			<u--input placeholder="请输入姓名" border="surround" v-model="nameValue"></u--input>
 		</u-modal>
-		<u-action-sheet
-			:show="showGender"
-			:actions="actions"
-			title="请选择性别"
-			@close="showGender = false"
-			@select="genderSelect"
-		>
+		<u-action-sheet :show="showGender" :actions="actions" title="请选择性别" @close="showGender = false"
+			@select="genderSelect">
 		</u-action-sheet>
-		<u-datetime-picker
-			:show="showBirth"
-			v-model="chooseDate"
-			:min-date="new Date('1930/01/01').getTime()"
-			:max-date="new Date('2070/12/31').getTime()"
-			mode="date"
-			closeOnClickOverlay
-			@confirm="confirmBirth"
-			@cancel=""
-			@close="() => showBirth = false"
-		></u-datetime-picker>
-		<u-modal
-			title="身份证"
-			:show="showIdCardNumber"
-			showCancelButton
-			closeOnClickOverlay
-			confirmColor="rgb(10, 185, 156)"
-			@confirm="confirmIdCardNumber"
-			@cancel="() => showIdCardNumber = false"
-			@close="() => showIdCardNumber = false"
-		>
-		 <u--input
-		    placeholder="请输入身份证号"
-		    border="surround"
-		    v-model="idCardNumberValue"
-		  ></u--input>
+		<u-datetime-picker :show="showBirth" v-model="chooseDate" :min-date="new Date('1930/01/01').getTime()"
+			:max-date="new Date('2070/12/31').getTime()" mode="date" closeOnClickOverlay @confirm="confirmBirth"
+			@cancel="() => showBirth = false" @close="() => showBirth = false"></u-datetime-picker>
+		<u-modal title="身份证" :show="showIdCardNumber" showCancelButton closeOnClickOverlay
+			confirmColor="rgb(10, 185, 156)" @confirm="confirmIdCardNumber" @cancel="() => showIdCardNumber = false"
+			@close="() => showIdCardNumber = false">
+			<u--input placeholder="请输入身份证号" border="surround" v-model="idCardNumberValue"></u--input>
 		</u-modal>
-		<u-modal
-			title="电话号"
-			:show="showTel"
-			showCancelButton
-			closeOnClickOverlay
-			confirmColor="rgb(10, 185, 156)"
-			@confirm="confirmTel"
-			@cancel="() => showTel = false"
-			@close="() => showTel = false"
-		>
-		 <u--input
-		    placeholder="请输入手机号"
-		    border="surround"
-		    v-model="telValue"
-		  ></u--input>
+		<u-modal title="电话号" :show="showTel" showCancelButton closeOnClickOverlay confirmColor="rgb(10, 185, 156)"
+			@confirm="confirmTel" @cancel="() => showTel = false" @close="() => showTel = false">
+			<u--input placeholder="请输入手机号" border="surround" v-model="telValue"></u--input>
 		</u-modal>
-		<u-modal
-			title="身高"
-			:show="showHeight"
-			showCancelButton
-			closeOnClickOverlay
-			confirmColor="rgb(10, 185, 156)"
-			@confirm="confirmHeight"
-			@cancel="() => showHeight = false"
-			@close="() => showHeight = false"
-		>
-		 <u--input
-		    border="surround"
-		    v-model="heightValue"
-		  ></u--input>
+		<u-modal title="身高" :show="showHeight" showCancelButton closeOnClickOverlay confirmColor="rgb(10, 185, 156)"
+			@confirm="confirmHeight" @cancel="() => showHeight = false" @close="() => showHeight = false">
+			<u--input border="surround" v-model="heightValue"></u--input>
 		</u-modal>
-		<u-modal
-			title="体重"
-			:show="showWeight"
-			showCancelButton
-			closeOnClickOverlay
-			confirmColor="rgb(10, 185, 156)"
-			@confirm="confirmWeight"
-			@cancel="() => showWeight = false"
-			@close="() => showWeight = false"
-		>
-		 <u--input
-		    border="surround"
-		    v-model="weightValue"
-		  ></u--input>
+		<u-modal title="体重" :show="showWeight" showCancelButton closeOnClickOverlay confirmColor="rgb(10, 185, 156)"
+			@confirm="confirmWeight" @cancel="() => showWeight = false" @close="() => showWeight = false">
+			<u--input border="surround" v-model="weightValue"></u--input>
 		</u-modal>
+	<uqrcode ref="uqrcodebig" canvas-id="qrcodebig" :hide="true" :value="qrCodeConfig.value" :size='300'
+		:options="qrCodeConfig.options">
+	</uqrcode>
 	</view>
 </template>
 
@@ -191,11 +98,19 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
+	import cellGroup from '../../uni_modules/uview-ui/libs/config/props/cellGroup';
 	export default {
 		data() {
 			return {
+				qrCodeConfig: {
+					size: 80,
+					value: 6,
+					options: {
+						margin: 10
+					}
+				},
 				nameValue: '',
-				idCardNumberValue:'',
+				idCardNumberValue: '',
 				telValue: '',
 				heightValue: '',
 				weightValue: '',
@@ -247,15 +162,58 @@
 			this.nickname = this.userInfo.nickname || "";
 			this.phone = this.userInfo.phone || "";
 		},
+		// onReady() {
+		// 	// 获取uQRCode实例
+		// 	var qr = new UQRCode();
+		// 	// 设置二维码内容
+		// 	qr.data = "https://uqrcode.cn/doc";
+		// 	// 设置二维码大小，必须与canvas设置的宽高一致
+		// 	qr.size = 200;
+		// 	// 调用制作二维码方法
+		// 	qr.make();
+		// 	// 获取canvas上下文
+		// 	var canvasContext = uni.createCanvasContext('qrcode', this); // 如果是组件，this必须传入
+		// 	// 设置uQRCode实例的canvas上下文
+		// 	qr.canvasContext = canvasContext;
+		// 	// 调用绘制方法将二维码图案绘制到canvas上
+		// 	qr.drawCanvas();
+		// },
 		//页面显示
 		onShow() {},
 		//方法
 		methods: {
+			// handle() {
+			// 	console.log(this.$refs.uqrcode)
+			// 	this.$refs.uqrcode.toTempFilePath({
+			// 		success: res => {
+			// 			console.log(res);
+			// 		}
+			// 	});
+			// },
+			//预览图片
+			previewImg() {
+				// console.log('imgList', imgList)
+				let img = ''
+				// this.$refs.uqrcode.size = 400
+				this.$refs.uqrcodebig.toTempFilePath({
+					success: res => {
+						console.log(res);
+						img = res.tempFilePath
+					}
+				});
+				// 预览图片
+				uni.previewImage({
+					current: img,
+					urls: [img],
+					indicator: 'none'
+				})
+				// this.$refs.uqrcode.size = 80
+			},
 			showNameModal() {
 				this.showName = true;
 			},
 			showGenderModal() {
-				this.showGender = true; 
+				this.showGender = true;
 			},
 			showBirthModal() {
 				this.showBirth = true;
@@ -272,15 +230,15 @@
 			showWeightModel() {
 				this.showWeight = true;
 			},
-			confirmName() {	
+			confirmName() {
 				const reg = /^[\u4E00-\u9FA5]{2,5}$/;
 				if (!reg.test(this.nameValue)) {
-				  // 如果名字长度不符合要求，则给出提示
-				  uni.showToast({
-					title: '姓名格式不对',
-					icon: 'none',
-				  });
-				  return;
+					// 如果名字长度不符合要求，则给出提示
+					uni.showToast({
+						title: '姓名格式不对',
+						icon: 'none',
+					});
+					return;
 				}
 				this.name = this.nameValue;
 				this.showName = false;
@@ -298,7 +256,7 @@
 				this.gender = e.name
 			},
 			confirmIdCardNumber() {
-				console.log(this.idCardNumberValue,11111)
+				console.log(this.idCardNumberValue, 11111)
 				const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 				if (!reg.test(this.idCardNumberValue)) {
 					uni.showToast({
@@ -317,26 +275,26 @@
 					return;
 				}
 				// 校验身份证号码出生日期是否合法
-				  var birthday = getBirthdayFromIdCardNumber(this.idCardNumberValue);
-				  if (!isValidBirthday(birthday)) {
-				    uni.showToast({
-				    	title: '请输入正确的身份证号',
-				    	icon: 'none',
-				    });
-				    return;
-				  }
+				var birthday = getBirthdayFromIdCardNumber(this.idCardNumberValue);
+				if (!isValidBirthday(birthday)) {
+					uni.showToast({
+						title: '请输入正确的身份证号',
+						icon: 'none',
+					});
+					return;
+				}
 				this.idCardNumber = this.idCardNumberValue;
 				this.showIdCardNumber = false;
 			},
 			confirmTel() {
 				const reg = /^1[3-9]\d{9}$/;
 				if (!reg.test(this.telValue)) {
-				  // 如果名字长度不符合要求，则给出提示
-				  uni.showToast({
-					title: '请输入正确的手机号',
-					icon: 'none',
-				  });
-				  return;
+					// 如果名字长度不符合要求，则给出提示
+					uni.showToast({
+						title: '请输入正确的手机号',
+						icon: 'none',
+					});
+					return;
 				}
 				this.tel = this.telValue;
 				this.showTel = false;
@@ -387,27 +345,29 @@
 			},
 			// 校验身份证号码的前两位是否为有效的省份代码
 			isValidProvinceCode(provinceCode) {
-			  var provinces = [
-			    '11', '12', '13', '14', '15', '21', '22', '23', '31', '32', '33', '34', '35', '36',
-			    '37', '41', '42', '43', '44', '45', '46', '50', '51', '52', '53', '54', '61', '62',
-			    '63', '64', '65', '71', '81', '82'
-			  ];
-			  return provinces.indexOf(provinceCode) !== -1;
+				var provinces = [
+					'11', '12', '13', '14', '15', '21', '22', '23', '31', '32', '33', '34', '35', '36',
+					'37', '41', '42', '43', '44', '45', '46', '50', '51', '52', '53', '54', '61', '62',
+					'63', '64', '65', '71', '81', '82'
+				];
+				return provinces.indexOf(provinceCode) !== -1;
 			},
 			// 校验身份证号码出生日期是否合法
 			isValidBirthday(birthday) {
-			  return (birthday !== null && birthday <= new Date());
+				return (birthday !== null && birthday <= new Date());
 			},
-			
+
 			// 根据身份证号码获取出生日期
 			getBirthdayFromIdCardNumber(idCardNumber) {
-			  var birthday = null;
-			  if (idCardNumber.length === 15) {
-			    birthday = new Date(idCardNumber.substring(6, 8), idCardNumber.substring(8, 10) - 1, idCardNumber.substring(10, 12));
-			  } else if (idCardNumber.length === 18) {
-			    birthday = new Date(idCardNumber.substring(6, 10), idCardNumber.substring(10, 12) - 1, idCardNumber.substring(12, 14));
-			  }
-			  return birthday;
+				var birthday = null;
+				if (idCardNumber.length === 15) {
+					birthday = new Date(idCardNumber.substring(6, 8), idCardNumber.substring(8, 10) - 1, idCardNumber
+						.substring(10, 12));
+				} else if (idCardNumber.length === 18) {
+					birthday = new Date(idCardNumber.substring(6, 10), idCardNumber.substring(10, 12) - 1, idCardNumber
+						.substring(12, 14));
+				}
+				return birthday;
 			},
 			onSubmit() {
 				if (this.avatar == '') {
@@ -428,7 +388,7 @@
 					nickname: this.nickname,
 					avatar: this.avatar
 				};
-				if(this.phone){
+				if (this.phone) {
 					if (!this.$base.phoneRegular.test(this.phone)) {
 						uni.showToast({
 							title: '请输入正确的手机号',
@@ -436,7 +396,7 @@
 						});
 						return;
 					}
-					if(this.phone != this.userInfo.phone){
+					if (this.phone != this.userInfo.phone) {
 						httpData.phone = this.phone;
 					}
 				}
@@ -469,19 +429,20 @@
 	};
 </script>
 <style lang="scss">
-@import '@/style/mixin.scss';
-.message{
-	background-color: #ffffff;
-}
+	@import '@/style/mixin.scss';
 
-.u-slot-value {
-	color: gray;
-	font-size: 14px;
-}
+	.message {
+		background-color: #ffffff;
+	}
 
-.form_but {
-	background-color: rgb(32, 198, 162);
-	color: #ffffff;
-	border-radius: 50upx;
-}
+	.u-slot-value {
+		color: gray;
+		font-size: 14px;
+	}
+
+	.form_but {
+		background-color: rgb(32, 198, 162);
+		color: #ffffff;
+		border-radius: 50upx;
+	}
 </style>
