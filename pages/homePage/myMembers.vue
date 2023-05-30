@@ -42,20 +42,13 @@ export default {
     data() {
         return {
             searchWords: "",
-            indexList: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"]
+            indexList: [ "W", "X", "Y", "Z", "#"]
             ,
-            avatar: "https://cdn.uviewui.com/uview/album/1.jpg",
+            avatar: {"https://cdn.uviewui.com/uview/album/1.jpg",
+			"https://cdn.uviewui.com/uview/album/2.jpg"}
             itemArr: [
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表B1', '列表B2', '列表B3'],
-                ['列表C1', '列表C2', '列表C3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
-                ['列表A1', '列表A2', '列表A3'],
+                ['王树', '王建', '王坤'],
+                ['肖雨涵', '肖子样'],
             ],
             hairline: false
         }
