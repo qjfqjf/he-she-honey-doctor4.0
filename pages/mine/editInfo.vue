@@ -87,9 +87,9 @@
 			@confirm="confirmWeight" @cancel="() => showWeight = false" @close="() => showWeight = false">
 			<u--input border="surround" v-model="weightValue"></u--input>
 		</u-modal>
-	<uqrcode ref="uqrcodebig" canvas-id="qrcodebig" :hide="true" :value="qrCodeConfig.value" :size='300'
-		:options="qrCodeConfig.options">
-	</uqrcode>
+		<uqrcode ref="uqrcodebig" canvas-id="qrcodebig" :hide="true" :value="qrCodeConfig.value" :size='300'
+			:options="qrCodeConfig.options">
+		</uqrcode>
 	</view>
 </template>
 
@@ -102,9 +102,10 @@
 	export default {
 		data() {
 			return {
+
 				qrCodeConfig: {
 					size: 80,
-					value: 6,
+					value: JSON.parse(uni.getStorageSync('userInfo')).uid,
 					options: {
 						margin: 10
 					}
