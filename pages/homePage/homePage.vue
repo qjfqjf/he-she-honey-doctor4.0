@@ -80,6 +80,7 @@
 		}, 
 		data() {
 			return {
+				token: uni.getStorageSync('access-token'),
 				wisperImage,
 				appManage, 
 				appFeature,
@@ -97,6 +98,12 @@
 		onLoad(e) {
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
+
+			if (!this.token) {
+				uni.navigateTo({
+					url: '/pages/login/login',
+				})
+			}
 		},
 		//页面显示
 		onShow() {

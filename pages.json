@@ -6,6 +6,12 @@
       }
     },
     {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
       "path": "pages/template/addTemplate",
       "style": {
         "navigationBarTitleText": "新增功能"
