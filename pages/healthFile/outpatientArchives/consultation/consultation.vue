@@ -29,17 +29,10 @@
                     <text style="font-size: 30rpx">{{item.selectedDate}}</text>
                 </view>
             </view>
-			<!-- 2、疾病诊断 -->
-			<view class="remarks">
-                <text class="cate-text" style="">{{showObj.remarksText}}</text>
-                <view style="height: 20rpx"></view>
-                <view style="width: 100%;height: 80rpx;background-color: #f5f5f5;font-size: 30rpx;padding: 20rpx 30rpx">
-                    <text style="font-weight: 300">{{item.illName}}</text>
-                </view>
-            </view>
 
 
-            <!-- 3、门诊类别 -->
+
+            <!-- 2、门诊类别 -->
             <view class="remarks">
                 <text class="cate-text" style="">{{showObj.typeText}}</text>
                 <view style="height: 20rpx"></view>
@@ -48,8 +41,6 @@
                 </view>
             </view>
 
-
-            
             <!-- 4、情况描述 -->
             <view class="remarks">
                 <view style="height: 20rpx"></view>
@@ -58,24 +49,6 @@
                 </view>
             </view>
 
-			<view class="remarks">
-                <view class="cate">
-                    <text class="cate-text">入院时间</text>
-                </view>
-                <view style="height: 20rpx"></view>
-                <view style="width: 100%;height: 80rpx;background-color: #f5f5f5;font-size: 30rpx;padding: 20rpx 30rpx">
-                    <text style="font-size: 30rpx">{{item.selectedDate1}}</text>
-                </view>
-            </view>
-			<view class="remarks">
-                <view class="cate">
-                    <text class="cate-text">出院时间</text>
-                </view>
-                <view style="height: 20rpx"></view>
-                <view style="width: 100%;height: 80rpx;background-color: #f5f5f5;font-size: 30rpx;padding: 20rpx 30rpx">
-                    <text style="font-size: 30rpx">{{item.selectedDate2}}</text>
-                </view>
-            </view>
             <!-- 5、图片展示 -->
 
             <view style="height: 20rpx"></view>
@@ -112,14 +85,12 @@
 </template>
 
 <script>
-	import emptyState from "../outpatientArchives/components/emptyState.vue";
-	import notEmptyState from "../outpatientArchives/components/notEmptyState.vue";
-	import headerNav from "../outpatientArchives/components/headerNav.vue";
+	import emptyState from "../components/emptyState.vue";
+	import headerNav from "../components/headerNav.vue";
 	export default {
 		components:{
 			headerNav,
 			emptyState,
-			notEmptyState
 		},
 		data() {
 			return {
@@ -127,12 +98,11 @@
 				showObj:{
 					curNow:0,
 					//这边统一写内容用
-					choiceTitle:'门诊类别',
-					type:["急诊","普通门诊"],
-					ImgText:'病例照片',
-					remarksText:'疾病诊断',
-					typeText:'门诊类型',
-					discription:'情况描述',
+					choiceTitle:'影像类别',
+					type:["转院","转科","会诊"],
+					ImgText:'添加照片',
+					typeText:'项目类别',
+					discription:'影像描述',
 
 					// 备注
 					remarksValue: '',
@@ -153,7 +123,7 @@
 					// 	uid:'',
 					// 	//病例id
 					// 	recordId:'',
-					// 	//门诊类型
+					// 	//化验类型
 					// 	type:'急诊',
 					// 	//选择的日期
 					// 	selectedDate:'111',
@@ -172,12 +142,12 @@
 					// 	],
 					// }
 				],
-				title:'住院病历',
+				title:'转诊会诊',
 				//点击添加跳转的路由
-				tourl:'/pages/healthFile/inpatientRecords/addInpatientRecords',
+				tourl:'/pages/healthFile/outpatientArchives/consultation/addConsultation',
 				//接口
 				tourl2:'',
-				addtext:'添加病例'
+				addtext:'添加档案'
 			}
 		},
 
