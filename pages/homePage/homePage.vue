@@ -44,7 +44,7 @@
 			<u-gap height="10"></u-gap> 
 			<view class="m-1 rounded-20 bg-white">
 				<u-grid :border="false" col="4">
-					<u-grid-item v-for="(listItem,listIndex) in appManage" :key="listIndex">
+					<u-grid-item v-for="(listItem,listIndex) in appManage" :key="listIndex" @click="dev(listIndex)">
 						<navigator :url="listItem.path" class="nav">
 							<u--image class="appManeger_block_icon" :src="listItem.icon"  height="90upx" width="90upx">
 							</u--image>
@@ -112,6 +112,15 @@
 		},
 		//方法
 		methods: {
+			//开发中...
+			dev(listIndex){
+				if(listIndex == 3 || listIndex >= 6){
+					uni.showToast({
+						title:"开发中...",
+						icon:"none"
+					})
+				}
+			},
 			switchChange() {
 
 			},

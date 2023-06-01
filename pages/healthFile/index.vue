@@ -59,43 +59,45 @@
 					{
 						img: require('@/static/icon/healthFile/physiologicalIndex.png'),
 						title: '生理指标',
-						url: ''
+						url: '/pages/healthFile/physiologicalIndex/physiologicalIndex'
 					},
 					{
 						img: require('@/static/icon/healthFile/healthStatus.png'),
 						title: '健康状况',
-						url: ''
+						url: '/pages/healthFile/healthStatus/healthStatus'
 					},
 					{
 						img: require('@/static/icon/healthFile/habit.png'),
-						title: '生活习惯'
+						title: '生活习惯',
+						url:'/pages/healthFile/habit/habit'
 					},
 					{
 						img: require('@/static/icon/healthFile/healthReport.png'),
-						title: '健康报告'
+						title: '健康报告',
+						url:'/pages/healthFile/healthReport/healthReport'
 					},
 				],
 				medicalList: [{
 						img: require('@/static/icon/healthFile/outpatientArchives.png'),
 						title: '门诊档案',
-						url: ''
+						url: '/pages/healthFile/outpatientArchives/outpatientArchives'
 					},
 					{
 						img: require('@/static/icon/healthFile/inpatientRecords.png'),
 						title: '住院档案',
-						url: ''
+						url: '/pages/healthFile/inpatientRecords/inpatientRecords'
 					},
 					{
 						img: require('@/static/icon/healthFile/publicHealth.png'),
 						title: '基本公卫',
-						url: ''
+						url: '/pages/healthFile/publicHealth/publicHealth'
 					},
 				],
 				
 				healthCheckList: [{
 						img: require('@/static/icon/healthFile/medicalExam.png'),
 						title: '体检档案',
-						url: ''
+						url: '/pages/healthFile/medicalExam/medicalExam'
 					},
 				],
 			}

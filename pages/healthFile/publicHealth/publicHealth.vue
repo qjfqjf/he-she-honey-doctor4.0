@@ -21,28 +21,25 @@
 <script>
 import emptyState from "../components/emptyState.vue";
 import headerNav from "../components/headerNav.vue";
-	export default {
-		components:{
-			emptyState,
-			headerNav
-		},
-		data() {
-			return {
-				//上面标题
-				title:"基础档案",
-
-				//点击添加跳转的路由
-				tourl: "/pages/healthFile/basicFile/addBasicFile",
-				//接口
-				tourl2:"",
-				addtext:"添加档案",
-				dataList:[]
-			}
-		},
-		methods: {
-			
+export default {
+	components:{
+		emptyState,
+		headerNav
+	},
+	data() {
+		return {
+			//上面标题
+			title:"基本公卫",
+			//添加跳转页面路径
+			tourl:"",
+			addtext:"添加公卫",
+			dataList:[]
 		}
+	},
+	methods: {
+
 	}
+}
 </script>
 
 <style lang="scss">
