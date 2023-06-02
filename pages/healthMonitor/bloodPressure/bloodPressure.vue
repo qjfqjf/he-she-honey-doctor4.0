@@ -60,12 +60,18 @@
 						</view>
 					</view>
 				</view>
-
 			</view>
 
 		</view>
 		<!-- 底部操作 -->
-		<BottomNavigation page="bloodPressure/manualEntry"></BottomNavigation>
+		<!-- <BottomNavigation page="bloodPressure/manualEntry"></BottomNavigation> -->
+		<view class="tools d-flex j-sb mt-5 p-4">
+			<view class="d-flex flex-column a-center" v-for="item in toolList" :key="item.title"
+				@click="onPageJump(item.url)">
+				<image :src="item.img" style="width: 100rpx; height: 100rpx;" mode="aspectFit"></image>
+				<text class="mt-1">{{item.title}}</text>
+			</view>
+		</view>
 		<u-toast ref="uToast"></u-toast>
 	</view>
 
@@ -76,6 +82,7 @@
 	import HealthHeader from "../components/healthHeader/HealthHeader.vue"
 	import TipInfo from '../components/tipInfo/TipInfo.vue'
 	import BottomNavigation from '../components/bottomNav/BottomNavigation.vue'
+	import baseUrl from '@/config/baseUrl.js'
 	export default {
 		components: {
 			HealthHeader,
@@ -135,8 +142,28 @@
 				urlList: {
 					history: '/pages/healthMonitor/bloodPressure/bloodpressureHistory',
 
-				}
+				},
+				userInfo: '',
 
+
+				// 底部工具栏
+				page: '',
+				toolList: [{
+						img: require('@/static/icon/bloodPressure/month.png'),
+						title: '月报',
+						url: '/pages/healthMonitor/bloodPressure/bloodPressureMonth'
+					},
+					{
+						img: require('@/static/icon/bloodPressure/device.png'),
+						title: '设备',
+						url: '/pages/mine/myDevice'
+					},
+					{
+						img: require('@/static/icon/bloodPressure/write.png'),
+						title: '手动录入',
+						url: '/pages/healthMonitor/bloodPressure/manualEntry' 
+					},
+				],
 			};
 		},
 		onLoad(e) {
@@ -146,6 +173,10 @@
 
 			}
 
+		},
+		//页面显示
+		onShow() {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 		},
 		methods: {
 			// 数据发生变化时
@@ -168,13 +199,35 @@
 				});
 			},
 			handleSavePressure() {
-				if (this.measureResult.DIA !== 0) {
-					this.btnColor = "#dadada"
-					this.$refs.uToast.show({
-						message: '保存成功',
-						type: 'success',
-					})
-				}
+				this.$http.post('/platform/dataset/call_kw', {
+					model: "sphygmomanometer.jiakang",
+					method: "create",
+					args: [
+						[{
+							"name": "血压计 (静态血压计)",
+							"numbers":this.serviceId,
+							"owner":this.userInfo.uid,
+							"systolic_blood_pressure":this.measureResult.SYS,
+							"tensioning_pressure":this.measureResult.DIA,
+							"heart_rate":this.measureResult.PUL,
+							"input_type":"equipment",
+						}]
+					],
+					kwargs:{}
+				}).then(res => {
+					if(this.measureResult.pressure != 0){
+						this.$refs.uToast.show({
+							message: '保存成功',
+							type: 'success',
+						})
+						this.btnColor = '#dadada'
+						this.measureResult.SYS = 0
+						this.measureResult.DIA = 0
+						this.measureResult.PUL = 0
+						this.measureResult.pressure = 0
+						this.option.series.data.value = 0
+					}
+				})
 			},
 			// 初始化蓝牙
 			initBlue() {
@@ -353,7 +406,7 @@
 					// console.log(resHex)
 				})
 			},
-			processMeasureData(buffer,hexArr) {
+			processMeasureData(buffer, hexArr) {
 				const data = new Int8Array(buffer);
 				//处理动态血压
 				if (data.length === 6 && data[0] === -2 && data[1] === -124 && data[5] === 4) {
@@ -385,7 +438,14 @@
 					this.measureResult.PUL = this.value[12] & 0xff
 					this.btnColor = '#01b09a'
 				}
-			}
+			},
+
+			onPageJump(url) {
+				uni.navigateTo({
+					url: url
+				});
+
+			},
 
 		}
 	}

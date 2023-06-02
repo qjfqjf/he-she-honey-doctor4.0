@@ -391,10 +391,41 @@
         "enablePullDownRefresh": false
       }
 
-    }, {
+    }, 
+	{
+	  "path": "pages/healthMonitor/oximeter/oximeterHistory",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
+	
+	},
+	{
+	  "path": "pages/healthMonitor/oximeter/oximeterMonth",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
+	
+	} ,
+	{
       "path": "pages/healthMonitor/bloodSugar/bloodSugar",
       "style": {
         "navigationBarTitleText": "血糖",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/healthMonitor/bloodSugar/bloodSugarHistory",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/healthMonitor/bloodSugar/bloodSugarMonth",
+      "style": {
+        "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
 
@@ -414,7 +445,23 @@
         "enablePullDownRefresh": false
       }
 
-    }, {
+    }, 
+	
+	{
+		"path": "pages/healthMonitor/bloodSUA/bloodSUAHistory",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/healthMonitor/bloodSUA/bloodSUAMonth",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
       "path": "pages/healthMonitor/cholesterol/cholesterol",
       "style": {
         "navigationBarTitleText": "胆固醇",
@@ -501,8 +548,15 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    }, 
+	{
+	  "path": "pages/healthMonitor/bodyFat/bodyFatHistory",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
+	},
+	{
       "path": "pages/healthMonitor/bloodPressure/bloodpressureHistory",
       "style": {
         "navigationBarTitleText": "",
@@ -602,15 +656,42 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    }, {
+    }, 
+	{
+		"path": "pages/healthMonitor/foreheadThermometer/foreheadThermometerHistory",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/healthMonitor/foreheadThermometer/foreheadThermometerMonth",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
       "path": "pages/healthMonitor/cholesterol/cholesterolManualEntry",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
     },
+	{
+		"path": "pages/healthMonitor/cholesterol/cholesterolHistory",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/healthMonitor/cholesterol/cholesterolMonth",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
     {
       "path": "pages/mine/myComment",
       "style": {
@@ -670,7 +751,15 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }
+    },
+	{
+		"path": "pages/healthMonitor/bloodFat/bloodFatMonth",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	}
+	
 
     , {
       "path": "pages/message/earlyWarning",
@@ -702,7 +791,25 @@
         "enablePullDownRefresh": false
       }
 
-    }, {
+    },
+	{
+	  "path": "pages/healthMonitor/ergometer/ergometerHistory",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
+	
+	},
+	{
+		"path": "pages/healthMonitor/ergometer/ergometerMonth",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	}
+	,
+	
+	{
       "path": "pages/template/deviceConnection",
       "style": {
         "navigationBarTitleText": "",
