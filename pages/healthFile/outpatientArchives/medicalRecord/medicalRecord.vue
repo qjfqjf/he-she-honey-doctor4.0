@@ -67,24 +67,15 @@
 					<view class="remarks">
 						<text class="cate-text" style="margin-left: 20rpx">{{showObj.ImgText}}</text>
 						<view style="height: 20rpx"></view>
-						<view class="showImage" style="display:flex; align-items: center; flex-wrap: wrap-reverse;">
-							<view class="example-body" style="width: 150rpx;height: 150rpx;margin-left: 50rpx;margin-bottom: 50rpx;" >
-								<view style="">
-									<image style="width: 150rpx;height: 150rpx; " :src="item.picture_1"></image>
-									<image style="width: 150rpx;height: 150rpx; " :src="item.picture_2"></image>
-									<image style="width: 150rpx;height: 150rpx; " :src="item.picture_3"></image>
-								</view>
-							</view>
-						</view>
-					</view>
 
-					<!--                <view>-->
-					<!--                    <uni-file-picker limit="9" :autoUpload="false" mode="grid"-->
-					<!--                                     file-mediatype="image" :image-styles="showObj.imageStyles"-->
-					<!--                                     v-model="dataList.imgs" -->
-					<!--                                     del-icon="false"-->
-					<!--                    ></uni-file-picker>-->
-					<!--                </view>-->
+						<u-album
+							:previewFullImage="true"
+							:urls="imgs[index]"
+							:multipleSize="100"
+						></u-album>
+
+
+					</view>
 
 					<!-- 6、分割线 -->
 					<u-divider style="margin-top: 50rpx" text="分割线" text-size="10" textColor="#1fc7a3"></u-divider>
@@ -99,6 +90,7 @@
 <script>
 	import emptyState from "../components/emptyState.vue";
 	import headerNav from "../components/headerNav.vue";
+	import {base64ToPath} from "../../../../uni_modules/mmmm-image-tools_1.4.0";
 	export default {
 		components:{
 			headerNav,
@@ -106,10 +98,18 @@
 		},
 		data() {
 			return {
-				imageStyles:{
-					width:90,
-					height:90
-				},
+				// urls2: [
+				// 	'https://cdn.uviewui.com/uview/album/1.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/2.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/3.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/4.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/5.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/6.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/7.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/8.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/9.jpg',
+				// 	'https://cdn.uviewui.com/uview/album/10.jpg',
+				// ],
 				//显示的文本
 				showObj:{
 					curNow:0,
@@ -124,7 +124,7 @@
 					// 备注
 					remarksValue: '',
 					// 选择日期
-					selectedDate: new Date(),
+					selectedDate: '',
 					imageStyles: {
 						width: 90,
 						height: 90,
@@ -135,30 +135,10 @@
 				},
 				//数据
 				records:[
-					//测试用的数据
-					// {
-					// 	//用户id
-					// 	id:'',
-					// 	//病例id
-					// 	recordId:'',
-					// 	//门诊类型
-					// 	type:'急诊',
-					// 	//选择的日期
-					// 	selectedDate:'2023-5-31 10:00:00',
-					// 	//疾病名称
-					// 	illName:'感冒',
-					// 	//疾病备注
-					// 	illDiscription:'流鼻涕，发热',
-					// 	//图片
-					// 	imgs:[
-					// 		'../../../../static/icon/wechat.png',
-					// 		'../../../../static/icon/wechat2.png',
-					// 		'../../../../static/icon/wechat2.png',
-					// 		'../../../../static/icon/wechat2.png',
-					// 		'../../../../static/icon/wechat2.png',
-					// 		'../../../../static/icon/wechat2.png',
-					// 	],
-					// }
+				],
+				//图片列表
+				imgs:[
+					[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
 				],
 				title:'门诊病例',
 				//点击添加跳转的路由
@@ -175,6 +155,10 @@
 					url:this.tourl
 				});
 			},
+			//添加图片前缀
+			base64AddPrefix(base64img){
+				return 'data:image/jpg;base64,'+base64img;
+			},
 			//查询当前用户所有档案
 			getRecordsList(){
 				//拿到用户信息
@@ -187,9 +171,10 @@
 					method:'post',
 					data: {
 						params:{
-							model:'inpatient.medical.records',
+							model:'outpatient.medical.records',
 							token:token,
 							uid:uid,
+							domain:[["patient_id","=",uid]],
 							//传回去的数组(存放字段)
 							fields:[
 								"picture_1",
@@ -202,17 +187,41 @@
 									//时间
 								"data_time",
 									//疾病类型
-								"data_type"
+								"data_type",
+								"patient_id"
 							]
 						}
 					},
 					success:(res)=>{
+						console.log(res)
 						//把传回来的值存入
 						this.records = res.data.result.records
-						//判断诊断类型
-						for(var record of this.records){
+						this.records.forEach((record,index)=>{
+
+							//判断诊断类型
 							record.data_type = record.data_type === 'emergency' ? '急诊' : '普通门诊';
-						}
+							//把图片前缀加上并且转化为正常路径
+							if(record.picture_1){
+								record.picture_1 = this.base64AddPrefix(record.picture_1)
+								this.imgs[index].push(record.picture_1)
+							}else{
+								record.picture_1 = ''
+							}
+							if(record.picture_2){
+								record.picture_2 = this.base64AddPrefix(record.picture_2)
+								this.imgs[index].push(record.picture_2)
+							}else{
+								record.picture_2 = ''
+							}
+							if(record.picture_3){
+								record.picture_3 = this.base64AddPrefix(record.picture_3)
+								this.imgs[index].push(record.picture_3)
+							}else{
+								record.picture_3 = ''
+							}
+
+							console.log(record)
+						})
 					},
 					fail:(err)=>{
 						uni.showToast({
@@ -221,9 +230,6 @@
 					}
 				})
 			},
-
-
-
 		},
 
 		onLoad(){
@@ -233,6 +239,7 @@
 </script>
 
 <style lang="scss">
+
 	.content{
 		background-color: #FFFFFF;
 		height: 100%;
