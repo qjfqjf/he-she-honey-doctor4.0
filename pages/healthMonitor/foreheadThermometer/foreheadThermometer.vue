@@ -11,9 +11,16 @@
 			:text="deviceStatus===0?'设备状态：未连接':'设备状态：已连接'+'('+deviceId+')'"></u--text>
 		<u-button class="mt-2" :color="btnColor" text="保存" @click="handleSaveHeat"></u-button>
 		<u--text class="d-flex j-center" color="#20baa6" suffixIcon="arrow-right"
-			iconStyle="font-size: 15px;color:#20baa6" text="查看监测历史" @click="handleDevelop">
+			iconStyle="font-size: 15px;color:#20baa6" text="查看监测历史" @click="handleJump()">
 		</u--text>
-		<BottomNavigation page="foreheadThermometer/frManualEntry"></BottomNavigation>
+		<!-- <BottomNavigation page="bloodSUA/suaManualEntry"></BottomNavigation> -->
+		<view class="tools d-flex j-sb mt-5 p-4">
+			<view class="d-flex flex-column a-center" v-for="item in toolList" :key="item.title"
+				@click="onPageJump(item.url)">
+				<image :src="item.img" style="width: 100rpx; height: 100rpx;" mode="aspectFit"></image>
+				<text class="mt-1">{{item.title}}</text>
+			</view>
+		</view>
 		<u-toast ref="uToast"></u-toast>
 		<!-- 	<scroll-view scroll-y class="box">
 			<view class="item" v-for="item in blueDeviceList" @click="connect(item)">
@@ -45,6 +52,9 @@
 	import TipInfo from '../components/tipInfo/TipInfo.vue'
 	import BottomNavigation from '../components/bottomNav/BottomNavigation.vue'
 	import MyCircle from '../components/circle/Circle.vue'
+	import {
+		formatDateTime
+	} from '@/utils/date.js'
 	export default {
 		components: {
 			HealthHeader,
@@ -58,18 +68,49 @@
 				deviceStatus: 0,
 				heat: 0, //测量温度
 				blueDeviceList: [],
-				deviceId: 'F0:B5:D1:88:38:15', // 蓝牙设备的id
+				owner: '2222',
+				time: formatDateTime(new Date()),
+				deviceId: uni.getStorageSync('frDeviceId'), // 蓝牙设备的id
 				serviceId: '0000FFF0-0000-1000-8000-00805F9B34FB', //设备的服务值
 				characteristicId: '0000FFF2-0000-1000-8000-00805F9B34FB', // 设备的特征值
+				urlList: {
+					history: '/pages/healthMonitor/foreheadThermometer/frHistory',
+				},
+				test_time: '',
+				// 底部工具栏
+				page: '',
+				userInfo: '',
+				toolList: [{
+						img: require('@/static/icon/bloodPressure/month.png'),
+						title: '月报',
+						url: '/pages/healthMonitor/foreheadThermometer/foreheadThermometerMonth'
+					},
+					{
+						img: require('@/static/icon/bloodPressure/device.png'),
+						title: '设备',
+						url: '/pages/mine/myDevice'
+					},
+					{
+						img: require('@/static/icon/bloodPressure/write.png'),
+						title: '手动录入',
+						url: '/pages/healthMonitor/foreheadThermometer/frManualEntry'
+					},
+				],
 
 			};
 		},
 		onLoad(e) {
-			this.initBlue()
+			this.initBlue();
 			if (this.deviceId && this.deviceStatus === 0) {
 				this.connect()
 
-			}
+			};
+			const timeString = new Date();
+			this.test_time = formatDateTime(timeString)
+		},
+		//页面显示
+		onShow() {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 		},
 		methods: {
 			handleDevelop() {
@@ -77,16 +118,38 @@
 					message: '开发中...'
 				})
 			},
-			handleSaveHeat() {
+			handleJump() {
+				uni.navigateTo({
+					url: '/pages/healthMonitor/foreheadThermometer/foreheadThermometerHistory'
+				});
 
-				if (this.heat !== 0) {
-					this.$refs.uToast.show({
-						message: '保存成功',
-						type: 'success',
-					})
-					this.btnColor = '#dadada'
-					this.heat = 0
-				}
+
+			},
+			handleSaveHeat() {
+				this.$http.post('/platform/dataset/call_kw',{
+					model: "forehead.temperature.gun",
+					method: "create",
+					args: [
+						[{
+							"name": "额温枪",
+							"numbers":this.serviceId,
+							"owner":this.userInfo.uid,
+							"temperature":this.heat,
+							"input_type":"equipment",
+							"test_time":this.formatDate(new Date())
+						}]
+					],
+					kwargs:{}
+				}).then(res => {
+					if(this.heat != 0){
+						this.$refs.uToast.show({
+							message: '保存成功',
+							type: 'success',
+						})
+						this.btnColor = '#dadada'
+						this.heat = 0
+					}
+				})
 			},
 			// 初始化蓝牙
 			initBlue() {
@@ -274,7 +337,28 @@
 				this.btnColor = '#01b09a'
 
 
-			}
+			},
+			//时间格式转换
+			formatDate(date) {
+				var y = date.getFullYear();
+				var m = date.getMonth() + 1;
+				m = m < 10 ? ('0' + m) : m;
+				var d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;
+				var h = date.getHours();
+				h = h < 10 ? ('0' + h) : h;
+				var minute = date.getMinutes();
+				minute = minute < 10 ? ('0' + minute) : minute;
+				var second = date.getSeconds();
+				second = second < 10 ? ('0' + second) : second;
+				return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+			},
+			onPageJump(url) {
+				uni.navigateTo({
+					url: url
+				});
+
+			},
 
 		}
 	}

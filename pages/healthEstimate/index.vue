@@ -46,7 +46,7 @@
           {
             img: require('@/static/icon/healthEstimate/infrared.png'),
             title: '红外测评',
-            url: '/pages/healthEstimate/infrared/infrared'
+            url: '/pages/healthEstimate/conditioning/conditioning'
           },
           {
             img: require('@/static/icon/healthEstimate/brain.png'),

@@ -59,22 +59,22 @@
 					{
 						img: require('@/static/icon/healthFile/physiologicalIndex.png'),
 						title: '生理指标',
-						url: '/pages/healthFile/physiologicalIndex/physiologicalIndex'
+						url: '/pages/healthFile/quota/index'
 					},
 					{
 						img: require('@/static/icon/healthFile/healthStatus.png'),
 						title: '健康状况',
-						url: '/pages/healthFile/healthStatus/healthStatus'
+						url: '/pages/healthFile/status/index'
 					},
 					{
 						img: require('@/static/icon/healthFile/habit.png'),
 						title: '生活习惯',
-						url:'/pages/healthFile/habit/habit'
+						url: '/pages/healthFile/habit/habit'
 					},
 					{
 						img: require('@/static/icon/healthFile/healthReport.png'),
-						title: '健康报告',
-						url:'/pages/healthFile/healthReport/healthReport'
+						title: '健康报告', 
+						url: '/pages/healthFile/healthReport/healthReport'
 					},
 				],
 				medicalList: [{
@@ -90,23 +90,25 @@
 					{
 						img: require('@/static/icon/healthFile/publicHealth.png'),
 						title: '基本公卫',
-						url: '/pages/healthFile/publicHealth/publicHealth'
+						url: ' '
 					},
 				],
 				
 				healthCheckList: [{
 						img: require('@/static/icon/healthFile/medicalExam.png'),
 						title: '体检档案',
-						url: '/pages/healthFile/medicalExam/medicalExam'
+						url: '/pages/healthFile/examination/examinationIndex'
 					},
 				],
 			}
 		},
 		methods: {
-			
 			click(url, name) {
-				if(!url) {
-					this.$refs.uToast.default('开发中...')
+				if(url==" ") {
+					uni.showToast({
+						title:'开发中',
+						icon:'none'
+					})
 				}
 				uni.navigateTo({
 					url: url
@@ -121,6 +123,7 @@
 		.title {
 			span {
 				padding-left: 20rpx;
+				border-left: 8rpx #28be9e solid;
 				font-weight: bold;
 			}
 		}
