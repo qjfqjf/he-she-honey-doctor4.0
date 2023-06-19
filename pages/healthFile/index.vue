@@ -90,23 +90,25 @@
 					{
 						img: require('@/static/icon/healthFile/publicHealth.png'),
 						title: '基本公卫',
-						url: ''
+						url: ' '
 					},
 				],
 				
 				healthCheckList: [{
 						img: require('@/static/icon/healthFile/medicalExam.png'),
 						title: '体检档案',
-						url: ''
+						url: '/pages/healthFile/examination/examinationIndex'
 					},
 				],
 			}
 		},
 		methods: {
-			
 			click(url, name) {
-				if(!url) {
-					this.$refs.uToast.default('开发中...')
+				if(url==" ") {
+					uni.showToast({
+						title:'开发中',
+						icon:'none'
+					})
 				}
 				uni.navigateTo({
 					url: url

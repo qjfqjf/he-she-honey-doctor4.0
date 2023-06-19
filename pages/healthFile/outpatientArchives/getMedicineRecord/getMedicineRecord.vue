@@ -61,7 +61,8 @@
 						<view style="height: 20rpx"></view>
 						<view
 							style="width: 100%;height: 80rpx;background-color: #f5f5f5;font-size: 30rpx;padding: 20rpx 30rpx">
-							<text>{{ item.dosage }}{{ item.dose_unit }}</text>
+							<text style="margin-right: 20rpx;">{{ item.dosage }}</text>
+							<text>{{ item.dose_unit }}</text>
 						</view>
 					</view>
 					<!-- 5、用药频次 -->
@@ -70,7 +71,8 @@
 						<view style="height: 20rpx"></view>
 						<view
 							style="width: 100%;height: 80rpx;background-color: #f5f5f5;font-size: 30rpx;padding: 20rpx 30rpx">
-							<text>{{ item.frequency }}{{ item.frequency_unit }}</text>
+							<text style="margin-right: 20rpx;">{{ item.frequency }}</text>
+							<text>{{ item.frequency_unit }}</text>
 						</view>
 					</view>
 					<!-- 6、备注 -->
@@ -82,32 +84,24 @@
 						</view>
 					</view>
 
-					<!-- 5、图片展示 -->
+					<!-- 7、图片展示 -->
 
 					<view style="height: 20rpx"></view>
 
 					<view class="remarks">
-						<text class="cate-text" style="margin-left: 20rpx">{{ showObj.ImgText }}</text>
+						<text class="cate-text" style="margin-left: 20rpx">{{showObj.ImgText}}</text>
 						<view style="height: 20rpx"></view>
 						<view class="showImage" style="display:flex; align-items: center; flex-wrap: wrap-reverse;">
-							<view class="example-body" v-for="img in item.imgs"
-								style="width: 150rpx;height: 150rpx;margin-left: 50rpx;margin-bottom: 50rpx;">
+							<view class="example-body" v-for="img in item.imgs" style="width: 150rpx;height: 150rpx;margin-left: 50rpx;margin-bottom: 50rpx;" >
 								<view style="">
 									<image style="width: 150rpx;height: 150rpx; " :src="img"></image>
 								</view>
 							</view>
+							<tel-pic :lineNum="3" :spacingNumber="10" :imageArr="item.imgs" ></tel-pic>
 						</view>
 					</view>
 
-					<!--                <view>-->
-					<!--                    <uni-file-picker limit="9" :autoUpload="false" mode="grid"-->
-					<!--                                     file-mediatype="image" :image-styles="showObj.imageStyles"-->
-					<!--                                     v-model="dataList.imgs" -->
-					<!--                                     del-icon="false"-->
-					<!--                    ></uni-file-picker>-->
-					<!--                </view>-->
-
-					<!-- 6、分割线 -->
+					<!-- 8、分割线 -->
 					<u-divider style="margin-top: 50rpx" text="分割线" text-size="10" textColor="#1fc7a3"></u-divider>
 
 				</view>
@@ -126,6 +120,18 @@ export default {
 	},
 	data() {
 		return {
+			urls2: [
+				'https://cdn.uviewui.com/uview/album/1.jpg',
+				'https://cdn.uviewui.com/uview/album/2.jpg',
+				'https://cdn.uviewui.com/uview/album/3.jpg',
+				'https://cdn.uviewui.com/uview/album/4.jpg',
+				'https://cdn.uviewui.com/uview/album/5.jpg',
+				'https://cdn.uviewui.com/uview/album/6.jpg',
+				'https://cdn.uviewui.com/uview/album/7.jpg',
+				'https://cdn.uviewui.com/uview/album/8.jpg',
+				'https://cdn.uviewui.com/uview/album/9.jpg',
+				'https://cdn.uviewui.com/uview/album/10.jpg',
+			],
 			//显示的文本
 			showObj: {
 				curNow: 0,
@@ -142,7 +148,7 @@ export default {
 				// 备注
 				remarksValue: '',
 				// 选择日期
-				selectedDate: new Date(),
+				selectedDate: '',
 				imageStyles: {
 					width: 90,
 					height: 90,
@@ -207,6 +213,7 @@ export default {
 						model: 'inpatient.medical.record',
 						token: token,
 						uid: uid,
+						domain:[["patient_id","=",uid]],
 						//传回去的数组(存放字段)
 						fields: [
 							"picture_1",
@@ -220,7 +227,7 @@ export default {
 							"dose_unit",
 							//用药频次
 							"frequency",
-							//用药凭此单位
+							//用药频次单位
 							"frequency_unit",
 							//备注
 							"data_result",
@@ -237,7 +244,20 @@ export default {
 					this.dataList = res.data.result.records
 					//判断诊断类型
 					for (var record of this.dataList) {
+						//用药类型
 						record.drug_class = record.drug_class === 'Oral administration' ? '口服' : '皮下注射';
+						//用药剂量单位
+						switch(record.dose_unit){
+							case 'mg': record.dose_unit = '毫克'; break;
+							case 'g': record.dose_unit = '克'; break;
+						}
+						//用药频次单位
+						switch(record.frequency_unit){
+							case 'day': record.frequency_unit = '次/日'; break;
+							case 'tomorrow': record.frequency_unit = '次/隔日'; break;
+							case 'weeks': record.frequency_unit = '次/周'; break;
+							case 'month': record.frequency_unit = '次/月'; break;
+						}
 					}
 
 				},

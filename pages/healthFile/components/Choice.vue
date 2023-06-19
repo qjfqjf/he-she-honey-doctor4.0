@@ -1,15 +1,16 @@
 <template>
     <view>
-            <u-radio
+        <u-radio-group max="1">
+			<u-radio 
                 class="mt-4 ml-2"
                 :customStyle="{marginBottom: '8px'}"
                 v-for="(item, index) in cellChoice"
                 :key="index"
-                :label="item"
-                :name="item"
+                :name="item.name"
                 @change="radioChange"
-            >
-            </u-radio>
+                shape="square"
+			>{{item.name}}</u-radio>
+		</u-radio-group>   
     </view>
 </template>
 
@@ -27,7 +28,7 @@ export default{
         }
     },
     props:{
-        cellChoice: Array
+        cellChoice: Array,
     }
 }
 </script>

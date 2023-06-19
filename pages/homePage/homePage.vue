@@ -7,7 +7,7 @@
 		</z-nav-bar>
 		
 		<view class="top-bar d-flex j-sb w-100 a-center my-2 h-100">
-			<u-button class="leftRoundButton border" color="#18b566">关闭值班
+			<u-button class="leftRoundButton border" color="#18b566" @click="changeStatu">{{workStatu}}
 			</u-button>
 			<view class="Avatar">
 				<u-avatar :src="avatar" size="40"></u-avatar>
@@ -80,6 +80,7 @@
 		}, 
 		data() {
 			return {
+				workStatu:'关闭值班',
 				token: uni.getStorageSync('access-token'),
 				wisperImage,
 				appManage, 
@@ -112,6 +113,13 @@
 		},
 		//方法
 		methods: {
+			changeStatu(){
+				if(this.workStatu == '关闭值班'){
+					this.workStatu = '开启值班'
+				}else{
+					this.workStatu = '关闭值班'
+				}
+			},
 			//开发中...
 			dev(listIndex){
 				if(listIndex == 3 || listIndex >= 6){

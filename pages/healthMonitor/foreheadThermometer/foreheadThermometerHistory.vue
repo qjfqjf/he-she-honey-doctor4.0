@@ -2,7 +2,7 @@
 	<view class="container">
 		<z-nav-bar title="额温枪历史">
 			<view slot="right" class="p-2" @click="handleDevelop()">
-				<text class="regular">预警规则</text>
+				<text class="regular" @click="handleWarningRule">预警规则</text>
 			</view>
 		</z-nav-bar>
 		<public-module></public-module>
@@ -13,13 +13,14 @@
 		<!-- 正文内容 -->
 		<view class="content-body">
 			<view class="item" v-for="(item, index) in historyList" :key="item.id">
-				<view class="date">
-					{{ item.test_time}}
+				<view class="date"
+				v-if="index === 0 || item.test_time.split(' ')[0] !== historyList[index - 1].test_time.split(' ')[0]">
+					{{ item.test_time.split(' ')[0]}}
 				</view>
 				<view class="record">
-					<text>{{ item.test_time}}</text>
+					<text>{{ item.test_time.split(' ')[1]}}</text>
 					<text>体温</text>
-					<text class="text">{{ item.temperature }}</text>
+					<text class="text">{{ item.temperature}}C</text>
 				</view>
 			</view>
 		</view>
@@ -30,6 +31,8 @@
 	export default {
 		data() {
 			return {
+				uid:0,
+				userInfo:'',
 				historyList: [],
 				// historyList: [
 				// {
@@ -75,7 +78,10 @@
 				// ],
 			};
 		},
-
+		//页面显示
+		onShow() {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+		},
 		methods: {
 			handleDevelop() {
 				uni.navigateTo({
@@ -86,6 +92,7 @@
 			getHistoryList() {
 				this.$http.post('/platform/dataset/search_read', {
 					model: "forehead.temperature.gun",
+					domain:[["owner.id","=",this.uid]],
 					fields: [
 						"name",
 						"numbers",
@@ -97,9 +104,22 @@
 				}).then(res => {
 					this.historyList = res.result.records
 				})
-			}
+			},
+			handleWarningRule(){
+				uni.navigateTo({
+					url: '/pages/healthMonitor/warningRule/warningRule' // 跳转到指定的目标页面
+				});
+			},
 		},
-		onLoad() {
+		onLoad(options) {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			// 获取URL参数
+			const uid = options.uid;
+			if(uid == 0){
+				this.uid = this.userInfo.uid
+			}else{
+				this.uid = uid
+			}
 			this.getHistoryList();
 		},
 	}
