@@ -2,7 +2,7 @@ import store from '@/store';
 import $http from '@/config/requestConfig'
 import base from '@/config/baseUrl';
 // #ifdef H5
-import { h5Login } from '@/config/html5Utils';
+//import { h5Login } from '@/config/html5Utils';
 // #endif
 let code = "";
 let loginStart = true;

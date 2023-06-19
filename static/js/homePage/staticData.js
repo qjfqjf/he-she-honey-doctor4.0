@@ -22,7 +22,7 @@ export const   appManage= [
 	{
 	    name: "AI智能",
 	    icon: "/static/icon/homePage/AI.png",
-	    path: "/pages/professionalCommunity/index"
+	    //path: "/pages/professionalCommunity/index"
 	},
     {
         name: "专业社区",
@@ -38,13 +38,13 @@ export const   appManage= [
     {
         name: "监管预警",
         icon: "/static/icon/homePage/fengxian.png", 
-        path: "/pages/treat/index"
+        //path: "/pages/treat/index"
     },
 
     {
         name: "教育/培训",
         icon: "/static/icon/homePage/educate.png",
-        path: "/pages/educate/index"
+        //path: "/pages/educate/index"
     },
 
 
