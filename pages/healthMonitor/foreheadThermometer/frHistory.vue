@@ -99,7 +99,7 @@
 				}
 
 				.value {
-					color: #2bc1a2;
+					color: #2bc1a2
 				}
 			}
 
