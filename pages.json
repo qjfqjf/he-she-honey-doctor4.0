@@ -1543,6 +1543,15 @@
             }
 
         }
+    ,{
+            "path" : "pages/healthMonitor/foreheadThermometer/foreheadThermometerTrend",
+            "style" :
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+
+        }
         ,{
             "path" : "pages/healthMonitor/foreheadThermometer/frHistory",
             "style" :
