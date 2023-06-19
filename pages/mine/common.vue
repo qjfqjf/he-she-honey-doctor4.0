@@ -77,7 +77,13 @@ export default {
 			console.log("1111111111111");
 		},
 		confirmExit() {
-			this.showExit = false;
+			this.showExit = false
+			// 清除所有的缓存
+			uni.clearStorageSync()
+			// 跳转到登录页面
+			uni.reLaunch({
+				url: '/pages/login/login',
+			})
 		},
 		onPageJump(url) {
 			uni.navigateTo({
