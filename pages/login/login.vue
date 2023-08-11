@@ -262,7 +262,7 @@ export default {
 					pwd: this.params.password
 				})
 					.then((res) => {
-						console.log(res)
+						console.log(res.data.uid)
 						//登录成功
 						if (res.code == 20000) {
 							// 用户的信息和token存放进localStorage里面去

@@ -88,6 +88,9 @@
 				homePageIcons,
 				avatar: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				name: '平台管理员',
+				uid: '',
+				doctorId: 0,
+				userInfo: '',
 			};
 		},
 		components: {
@@ -96,7 +99,9 @@
 			// SwiperList
 		},
 		//第一次加载
-		onLoad(e) {
+		onLoad() {
+			this.userInfo = uni.getStorageSync('userInfo')
+			this.uid = this.userInfo
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
 

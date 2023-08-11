@@ -61,7 +61,7 @@
 			// 获取URL参数
 			const uid = options.uid;
 			if (uid == 0) {
-				this.uid = this.userInfo.uid
+				this.uid = this.userInfo
 			} else {
 				this.uid = uid
 			}
@@ -79,9 +79,7 @@
 				this.scrollLeftNow = val;
 			},
 
-
 			confirm(time) {
-				console.log(time)
 				this.show = false
 				this.selectTime = new Date(time.value).format('yyyy-MM-dd hh:mm:ss')
 			},
@@ -109,27 +107,27 @@
 			// 处理保存
 			handleSaveInfo() {
 				if (this.scrollLeftNow != 0) {
-					this.$http.post('/platform/dataset/call_kw', {
-						model: "forehead.temperature.gun",
-						method: "create",
-						args: [
-							[{
-								"name": "额温枪",
-								"numbers": "001",
-								"owner":this.uid,
-								"temperature": this.scrollLeftNow,
-								"input_type": "hend",
-								"test_time":this.time
-							}]
-						],
-						kwargs: {}
+					this.$http.post('/tem/create', {
+						uid: this.uid,					
+						value: this.scrollLeftNow,
+						time: this.selectTime,
+						type: 2
 					}).then(res => {
-						this.$refs.uToast.show({
-							message: '保存成功',
-							type: 'success',
-						})
-						this.btnColor = '#dadada'
-						this.scrollLeftNow = 0
+						if (this.scrollLeftNow != 0) {
+							this.$refs.uToast.show({
+								message: '保存成功',
+								type: 'success',
+							})
+							this.btnColor = '#dadada'
+							// this.scrollLeftNow = 0
+						}else{
+							this.$refs.uToast.show({
+								message: '保存失败',
+								type: 'error',
+							})
+							this.btnColor = '#dadada'
+							// this.scrollLeftNow = 0
+						}
 					})
 				} else {
 					this.$refs.uToast.show({
@@ -137,7 +135,7 @@
 						type: 'error',
 					})
 					this.btnColor = '#dadada'
-					this.scrollLeftNow = 0
+					// this.scrollLeftNow = 0
 				}
 			}
 		}

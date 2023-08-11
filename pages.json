@@ -395,6 +395,13 @@
                 "enablePullDownRefresh" : false
             }
         },
+		{
+		    "path" : "pages/healthMonitor/bloodSugar/bloodSugarTrend",
+		    "style" : {
+		        "navigationBarTitleText" : "血糖",
+		        "enablePullDownRefresh" : false
+		    }
+		},
         {
             "path" : "pages/homePage/homePage",
             "style" : {
