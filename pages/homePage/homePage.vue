@@ -101,7 +101,7 @@
 		//第一次加载
 		onLoad() {
 			this.userInfo = uni.getStorageSync('userInfo')
-			this.uid = this.userInfo
+			this.uid = this.userInfos
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
 
