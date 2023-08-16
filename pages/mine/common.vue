@@ -9,7 +9,7 @@
 		<public-module></public-module>  
 		<u-cell-group>
 			<u-cell size="large" class="message" icon="../../static/icon/integral/my.png" url="/pages/mine/editInfo" title="我的资料"></u-cell>
-			<u-cell size="large" class="message" icon="../../static/icon/integral/execution.png" url="" title="执业信息(必填)"></u-cell>
+			<u-cell size="large" class="message" icon="../../static/icon/integral/execution.png" url="/pages/mine/practice" title="执业信息(必填)"></u-cell>
 			<u-cell size="large" class="message" icon="../../static/icon/integral/personalProfile.png" url="" title="个人简介"></u-cell>
 		</u-cell-group>
 		<u-gap

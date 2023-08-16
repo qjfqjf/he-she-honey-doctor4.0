@@ -348,6 +348,12 @@
                 "navigationBarTitleText" : "个人信息"
             }
         },
+		{
+		    "path" : "pages/mine/practice",
+		    "style" : {
+		        "navigationBarTitleText" : "个人信息"
+		    }
+		},
         {
             "path" : "pages/template/poster/goodsPoster",
             "style" : {
