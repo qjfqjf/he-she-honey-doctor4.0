@@ -203,7 +203,7 @@ export default {
 			//拿到用户信息
 			const userInfo = JSON.parse(uni.getStorageSync('userInfo'));
 			let uid = userInfo.uid;
-			uid =  279
+			// uid =  279
 			const token = userInfo.token;
 			//接口调用
 				this.$http.post(this.tourl2, {
