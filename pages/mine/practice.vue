@@ -7,19 +7,19 @@
 			<u-cell-group :border="false" class="message" display="flex">
 				<u-cell @click="showattrModal" titleStyle="font-size: 14px" size="large" icon="star-fill"
 					:icon-style="iconStyle" title="执页属性" :isLink="true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ attrText }}</text>
 				</u-cell>
 				<u-cell @click="showpfdModal" titleStyle="font-size: 14px" size="large" icon="star-fill"
 					:icon-style="iconStyle" title="擅长领域" :isLink="true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ pfdText }}</text>
 				</u-cell>
 				<u-cell @click="showdepaModal" class="message" titleStyle="font-size: 14px" size="large"
 					icon="star-fill" :icon-style="iconStyle" title="科室" :value="birth" :isLink="true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ depaText }}</text>
 				</u-cell>
 				<u-cell @click="showjobModal" class="message" titleStyle="font-size: 14px" size="large"
 					icon="star-fill" :icon-style="iconStyle" title="职称" :value="birth" :isLink="true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ jobText }}</text>
 				</u-cell>
 				<u-cell @click="" class="message" titleStyle="font-size: 14px" size="large"
 					icon="star-fill" :icon-style="iconStyle" title="执业证书" :value="birth" :isLink="true">
@@ -34,28 +34,36 @@
 			<u-cell-group :border="false" class="message">
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择省份" titleStyle="font-size: 14px"
 					:isLink="true" @click="showarea = true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ areaText }}</text>
 				</u-cell>
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择城市" titleStyle="font-size: 14px"
-					:isLink="true" @click="showareaModal = true">
-					<text slot="value" class="u-slot-value"></text>
+					:isLink="true" @click="showcity = true">
+					<text slot="value" class="u-slot-value">{{ cityText }}</text>
 				</u-cell>
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择区县" titleStyle="font-size: 14px"
-					:isLink="true" @click="showareaModal = true">
-					<text slot="value" class="u-slot-value"></text>
+					:isLink="true" @click="showvillage = true">
+					<text slot="value" class="u-slot-value">{{ villageText }}</text>
 				</u-cell>
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="机构类别" titleStyle="font-size: 14px"
-					:isLink="true" @click="showRelation = true">
-					<text slot="value" class="u-slot-value"></text>
+					:isLink="true" @click="showorgan = true">
+					<text slot="value" class="u-slot-value">{{ organText }}</text>
 				</u-cell>
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="执业机构" titleStyle="font-size: 14px"
 					:isLink="true" @click="showRelation = true">
-					<text slot="value" class="u-slot-value"></text>
+					<text slot="value" class="u-slot-value">{{ organization }}</text>
 				</u-cell>
 			</u-cell-group>
+			<view class="d-flex j-center">
+				<u-button text="保存" size="large" type="success" shape="circle" color="rgb(10, 185, 156)"
+				style="width: 660rpx; height: 110rpx" @click="saveDoctor()"></u-button>
+			</view>
 		</view>
+		<u-modal title="机构" :show="showRelation" showCancelButton closeOnClickOverlay confirmColor="rgb(10, 185, 156)"
+			@confirm="confirm9($event)" @cancel="() => (showRelation = false)" @close="() => (showRelation = false)">
+			<u--input placeholder="请输入机构名" border="surround" v-model="organization"></u--input>
+		</u-modal>
 		<u-picker :columns="attr" :show="showattr" close-on-click-overlay @cancel="cancel0" @close="close0"
-                      @confirm="confirm0">
+                      @confirm="confirm0($event)">
 					  <template #cancel>
 						<div>取消</div>
 					</template>
@@ -64,7 +72,7 @@
 					</template>
 		</u-picker>
 		<u-picker :columns="pfd" :show="showpfd" close-on-click-overlay @cancel="cancel1" @close="close1"
-                      @confirm="confirm0">
+                      @confirm="confirm1($event)">
 					  <template #cancel>
 						<div>取消</div>
 					</template>
@@ -73,7 +81,7 @@
 					</template>
 		</u-picker>
 		<u-picker :columns="depa" :show="showdepa" close-on-click-overlay @cancel="cancel2" @close="close2"
-                      @confirm="confirm0">
+                      @confirm="confirm2($event)">
 					  <template #cancel>
 						<div>取消</div>
 					</template>
@@ -82,7 +90,7 @@
 					</template>
 		</u-picker>
 		<u-picker :columns="job" :show="showjob" close-on-click-overlay @cancel="cancel3" @close="close3"
-                      @confirm="confirm0">
+                      @confirm="confirm3($event)">
 					  <template #cancel>
 						<div>取消</div>
 					</template>
@@ -90,8 +98,37 @@
 						<div>确定</div>
 					</template>
 		</u-picker>
+		
 		<u-picker :columns="area" :show="showarea" close-on-click-overlay @cancel="cancel5" @close="close5"
-                      @confirm="confirm5($event)">
+                      @confirm="confirm5($event)" >
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
+		<u-picker :columns="city" :show="showcity" close-on-click-overlay @cancel="cancel6" @close="close6"
+                      @confirm="confirm6($event)">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
+		<u-picker :columns="village" :show="showvillage" close-on-click-overlay @cancel="cancel7" @close="close7"
+                      @confirm="confirm7($event)">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
+		<u-picker :columns="organ" :show="showorgan" close-on-click-overlay @cancel="cancel8" @close="close8"
+                      @confirm="confirm8($event)">
 					  <template #cancel>
 						<div>取消</div>
 					</template>
@@ -122,35 +159,54 @@
 				organ:[[]],
 				area: [[]],
 				city:[[]],
+				village:[[]],
+				attrList:[],
+				pfdList:[],
+				depaList:[],
+				jobList:[],
+				organList:[],
 				areaList:[],
+				cityList:[],
+				villageList:[],
 				userInfo: {
 					name: '',
 				},
 				showInfo: {
 
 				},
-				nameValue: '',
-				idCardNumberValue: '',
-				telValue: '',
-				codeValue: '',
-				heightValue: '',
-				weightValue: '',
-				relationShip: '',
-				gender: '',
-				relationShipText: '',
-				chooseDate: Number(new Date()),
+				// nameValue: '',
+				// idCardNumberValue: '',
+				// telValue: '',
+				// codeValue: '',
+				// heightValue: '',
+				// weightValue: '',
+				// relationShip: '',
+				// gender: '',
+				// relationShipText: '',
+				// chooseDate: Number(new Date()),
 
 				attrText:'',
+				pfdText:'',
+				depaText:'',
+				jobText:'',	
 				areaText:'',
+				cityText:'',
+				villageText:'',
+				organText:'',
+				organization:'',
+				area_id:'',
+				city_id:'',
+				village_id:'',
 				showattr: false,
 				showpfd: false,
 				showdepa: false,
 				showjob: false,
 				showorgan: false,
 				showarea: false,
-				showHeight: false,
-				showWeight: false,
-				showRelation: false,
+				showcity: false,
+				showvillage: false,
+				showorgan: false,
+				showRelation:false,
 				popupOptions: {
 					placeholder: '',
 				},
@@ -216,6 +272,7 @@
 		onLoad: function (opt) {
 			console.log(opt.e); 
 			this.selectUser()
+			this.getDoctor()
 			// console.log(111)
 			// _this = this;
 			// console.log('type', opt.type);
@@ -231,22 +288,60 @@
 			// }
 		},
 		methods:{
+			getDoctor(){
+				this.$http.get("/practice/index",{
+					uid:uni.getStorageSync('userInfo')
+				}).then((res)=>{
+					console.log(res);
+					this.attrText = res.data.attr_cn;
+					this.pfdText = res.data.pfd_cn;
+					this.depaText = res.data.depa_cn;
+					this.jobText = res.data.job_cn;
+					this.areaText = res.data.province_cn;
+					this.cityText = res.data.city_cn;
+					this.villageText = res.data.district_cn
+					this.organText = res.data.organ_cn
+					this.organization = res.data.organization;
+				})
+			},
 			selectUser(){
 				this.$http.get("/practice/getConfig",{}).then((res)=>
 				{
 					console.log(res);
-					for(let i=0;i<res.data.attr.length;i++) this.attr[0].splice(i,1,res.data.attr[i].name);
-					for(let i=0;i<res.data.pfd.length;i++) this.pfd[0].splice(i,1,res.data.pfd[i].name);
-					for(let i=0;i<res.data.depa.length;i++) this.depa[0].splice(i,1,res.data.depa[i].name);
-					for(let i=0;i<res.data.job.length;i++) this.job[0].splice(i,1,res.data.job[i].name);
-					for(let i=0;i<res.data.organ.length;i++) this.organ[0].splice(i,1,res.data.organ[i].name);
+					for(let i=0;i<res.data.attr.length;i++){
+						this.attr[0].splice(i,1,res.data.attr[i].name);
+						this.attrList.splice(i,1,res.data.attr[i]);
+					} 
+					for(let i=0;i<res.data.pfd.length;i++){
+						this.pfd[0].splice(i,1,res.data.pfd[i].name);
+						this.pfdList.splice(i,1,res.data.pfd[i]);
+					} 
+					for(let i=0;i<res.data.depa.length;i++){
+						this.depa[0].splice(i,1,res.data.depa[i].name);
+						this.depaList.splice(i,1,res.data.depa[i]);
+					} 
+					for(let i=0;i<res.data.job.length;i++){
+						this.job[0].splice(i,1,res.data.job[i].name);
+						this.jobList.splice(i,1,res.data.job[i]);
+					} 
+					for(let i=0;i<res.data.organ.length;i++){
+						this.organ[0].splice(i,1,res.data.organ[i].name);
+						this.organList.splice(i,1,res.data.organ[i]);
+					} 
 					for(let i=0;i<res.data.area.length;i++){
 						this.area[0].splice(i,1,res.data.area[i].name);
 						this.areaList.splice(i,1,res.data.area[i]);
 						if(res.data.area[i].data){
-							for(let j=0;j<res.data.area[i].data.length;j++) this.city[0].push(res.data.area[i].data[j]);
+							for(let j=0;j<res.data.area[i].data.length;j++) {
+								this.cityList.push(res.data.area[i].data[j]);
+								if(res.data.area[i].data[j].data)
+								{
+									for(let x=0;x<res.data.area[i].data[j].data.length;x++) this.villageList.push(res.data.area[i].data[j].data[x]);
+								}
+							}
+							
 						}
-						
+					
 					} 
 					
 					console.log('attr',this.attr);
@@ -254,8 +349,72 @@
 					console.log('depa',this.depa);
 					console.log('job',this.job);
 					console.log('organ',this.organ);
-					console.log('area',this.area);
-					console.log('city',this.city);
+					// console.log('area',this.area);
+					// console.log('city',this.cityList);
+					console.log('village',this.villageList);
+				})
+			},
+			saveDoctor(){
+				let save = {}
+				if(this.attrText){
+					const attr = this.attrList.find(obj => obj.name === this.attrText);
+					save.attr_id = attr.id;
+				}
+				if(this.jobText){
+					const job = this.jobList.find(obj => obj.name === this.jobText);
+					save.job_id = job.id;
+				}
+				if(this.pfdText){
+					const pfd = this.pfdList.find(obj => obj.name === this.pfdText);
+					save.pfd_id = pfd.id;
+					save.pfd_cn = this.pfdText
+				}
+				if(this.depaText){
+					const depa = this.depaList.find(obj => obj.name === this.depaText);
+					save.depa_id = depa.id;
+					save.depa_text = this.depaText;
+				}
+				if(this.organText){
+					const organ = this.organList.find(obj => obj.name === this.organText);
+					save.organ_id = organ.id;
+					save.organization = this.organization
+				}
+				// if(this.organText){
+				// 	const organ = this.organList.find(obj => obj.name === this.organText);
+				// 	save.organ_id = organ.id;
+				// 	save.organization = this.organization
+				// }
+				save.province_id = this.area_id
+				save.city_id = this.city_id
+				save.district_id = this.village_id
+				console.log('save',save); 
+				this.$http.post('/practice/save',{
+					...save	
+				}).then((res)=>{
+					console.log('res',res);
+					if (res.code == 20000) {
+								uni.showToast({
+									title: '保存成功',
+									icon: 'none',
+									duration: 2000,
+								})
+								setTimeout(() => {
+									uni.navigateBack({
+										delta: 1,
+									})
+								}, 1000)
+							} else {
+								uni.showToast({
+									title: '保存失败',
+									icon: 'none',
+									duration: 2000,
+								})
+								setTimeout(() => {
+									uni.navigateBack({
+										delta: 1,
+									})
+								}, 1000)
+							}
 				})
 			},
 			btn0() {
@@ -300,25 +459,82 @@
 			cancel5() {
 				this.showarea = false
 			},
+			close6() {
+				this.showcity = false
+			},
+			cancel6() {
+				this.showcity = false
+			},
+			close7() {
+				this.showvillage = false
+			},
+			cancel7() {
+				this.showvillage = false
+			},
+			close8() {
+				this.showorgan = false
+			},
+			cancel8() {
+				this.showorgan = false
+			},
 			confirm0(e) {
+				this.attrText = e.value.toString();
 				this.showattr = false;
 			},
 			confirm1(e) {
+				this.pfdText = e.value.toString();
 				this.showpfd = false;
 			},
 			confirm2(e) {
-				this.showattr = false;
+				this.depaText = e.value.toString();
+				this.showdepa = false;
 			},
 			confirm3(e) {
-				this.showpfd = false;
-			},
-			confirm4(e) {
-				this.showattr = false;
+				this.jobText = e.value.toString();
+				this.showjob = false;
 			},
 			confirm5(e) {
 				console.log('e',e)
-				this.areaText = e.value
-				this.showpfd = false;
+				this.areaText = e.value.toString();
+				const area = this.areaList.find(obj => obj.name === this.areaText);
+				console.log('area',area);
+				this.area_id = area.id
+				const cityList  = this.cityList.filter(obj => obj.parent_id === area.id);
+				console.log('city',cityList)
+				for (let i=0;i<cityList.length;i++){
+					this.city[0].splice(i,1,cityList[i].name);
+				} 
+				console.log('city',this.city[0]);
+				this.showarea = false;
+			},
+			confirm6(e) {
+				console.log('e',e)
+				this.cityText = e.value.toString();
+				const city = this.cityList.find(obj => obj.name === this.cityText);
+				console.log('city',city);
+				this.city_id = city.id
+				const villageList  = this.villageList.filter(obj => obj.parent_id === city.id);
+				console.log('village',villageList)
+				for (let i=0;i<villageList.length;i++){
+					this.village[0].splice(i,1,villageList[i].name);
+				} 
+				console.log('village[0]',this.village[0]);
+				this.showcity = false;
+			},
+			confirm7(e) {
+				console.log('e',e)
+				this.villageText = e.value.toString();
+				const village = this.villageList.find(obj => obj.name === this.villageText);
+				this.village_id =village.id
+				this.showvillage = false;
+			},
+			confirm8(e) {
+				console.log('e',e)
+				this.organText = e.value.toString();
+				this.showorgan = false;
+			},
+			confirm9(e) {
+				this.showRelation = false;
 			},
 			showattrModal() {
 				console.log(this.attr);
