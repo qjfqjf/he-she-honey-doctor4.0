@@ -33,7 +33,7 @@
 			<u-gap height="10"></u-gap>
 			<u-cell-group :border="false" class="message">
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择省份" titleStyle="font-size: 14px"
-					:isLink="true" @click="showareaModal = true">
+					:isLink="true" @click="showarea = true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择城市" titleStyle="font-size: 14px"
@@ -63,7 +63,7 @@
 						<div>确定</div>
 					</template>
 		</u-picker>
-		<u-picker :columns="pfd" :show="showpfd" close-on-click-overlay @cancel="cancel0" @close="close0"
+		<u-picker :columns="pfd" :show="showpfd" close-on-click-overlay @cancel="cancel1" @close="close1"
                       @confirm="confirm0">
 					  <template #cancel>
 						<div>取消</div>
@@ -72,8 +72,33 @@
 						<div>确定</div>
 					</template>
 		</u-picker>
-		<u-picker :columns="area" :show="showarea" close-on-click-overlay @cancel="cancel0" @close="close0"
-                      @confirm="confirm0"></u-picker>
+		<u-picker :columns="depa" :show="showdepa" close-on-click-overlay @cancel="cancel2" @close="close2"
+                      @confirm="confirm0">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
+		<u-picker :columns="job" :show="showjob" close-on-click-overlay @cancel="cancel3" @close="close3"
+                      @confirm="confirm0">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
+		<u-picker :columns="area" :show="showarea" close-on-click-overlay @cancel="cancel5" @close="close5"
+                      @confirm="confirm5($event)">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
+		</u-picker>
 	</view>
 </template>
 
@@ -92,10 +117,12 @@
 				},
 				attr:[[]],
 				pfd:[[]],
-				depa:[[],[]],
-				job:[[],[]],
-				organ:[[],[]],
-				area: [[],[]],
+				depa:[[]],
+				job:[[]],
+				organ:[[]],
+				area: [[]],
+				city:[[]],
+				areaList:[],
 				userInfo: {
 					name: '',
 				},
@@ -114,6 +141,7 @@
 				chooseDate: Number(new Date()),
 
 				attrText:'',
+				areaText:'',
 				showattr: false,
 				showpfd: false,
 				showdepa: false,
@@ -212,13 +240,22 @@
 					for(let i=0;i<res.data.depa.length;i++) this.depa[0].splice(i,1,res.data.depa[i].name);
 					for(let i=0;i<res.data.job.length;i++) this.job[0].splice(i,1,res.data.job[i].name);
 					for(let i=0;i<res.data.organ.length;i++) this.organ[0].splice(i,1,res.data.organ[i].name);
-					for(let i=0;i<res.data.area.length;i++) this.area[0].splice(i,1,res.data.area[i].name);
+					for(let i=0;i<res.data.area.length;i++){
+						this.area[0].splice(i,1,res.data.area[i].name);
+						this.areaList.splice(i,1,res.data.area[i]);
+						if(res.data.area[i].data){
+							for(let j=0;j<res.data.area[i].data.length;j++) this.city[0].push(res.data.area[i].data[j]);
+						}
+						
+					} 
+					
 					console.log('attr',this.attr);
 					console.log('pfd',this.pfd);
 					console.log('depa',this.depa);
 					console.log('job',this.job);
 					console.log('organ',this.organ);
 					console.log('area',this.area);
+					console.log('city',this.city);
 				})
 			},
 			btn0() {
@@ -234,20 +271,54 @@
 				this.showattr = false
 			},
 			close1() {
-				this.show2 = false
+				this.showpfd = false
 			},
 			cancel1() {
-				this.show2 = false
+				this.showpfd = false
+			},
+			close2() {
+				this.showdepa = false
+			},
+			cancel2() {
+				this.showdepa = false
+			},
+			close3() {
+				this.showjob = false
+			},
+			cancel3() {
+				this.showjob = false
+			},
+			close4() {
+				this.showpfd = false
+			},
+			cancel4() {
+				this.showpfd = false
+			},
+			close5() {
+				this.showarea = false
+			},
+			cancel5() {
+				this.showarea = false
 			},
 			confirm0(e) {
-				this.city = e.value[0]
-				this.show1 = true
-				this.show0 = false;
+				this.showattr = false;
 			},
 			confirm1(e) {
-				this.department = e.value[0]
-				this.show3 = true
-				this.show2 = false;
+				this.showpfd = false;
+			},
+			confirm2(e) {
+				this.showattr = false;
+			},
+			confirm3(e) {
+				this.showpfd = false;
+			},
+			confirm4(e) {
+				this.showattr = false;
+			},
+			confirm5(e) {
+				console.log('e',e)
+				this.areaText = e.value
+				this.showpfd = false;
 			},
 			showattrModal() {
 				console.log(this.attr);
