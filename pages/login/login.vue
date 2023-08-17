@@ -216,7 +216,7 @@
 								console.log('this.uid', uni.getStorageSync('userInfo'))
 								if(!uni.getStorageSync('userInfo')){
 									this.$http.post("/user/create", {
-									mobile: this.form.phonenum,
+									phone: this.form.phonenum,
 									code: this.form.pass,
 									type: 0,
 									utype: "1"

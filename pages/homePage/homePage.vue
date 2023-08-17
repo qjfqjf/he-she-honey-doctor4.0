@@ -5,7 +5,7 @@
 			<img slot="left" :src="homePageIcons.Scanning.icon" class="small-icon p-2" alt=""></img>
 			<img slot="right" :src="homePageIcons.Location.icon" class="small-icon p-2" alt=""></img>
 		</z-nav-bar>
-		
+
 		<view class="top-bar d-flex j-sb w-100 a-center my-2 h-100">
 			<u-button class="leftRoundButton border" color="#18b566" @click="changeStatu">{{workStatu}}
 			</u-button>
@@ -14,7 +14,7 @@
 				<view style="font-size: 26upx; font-weight: bold;">{{ name }}</view>
 			</view>
 			<u-button class="rightRoundButton h-100 border" @click="navto" color="#18b566">我的会员
-			</u-button> 
+			</u-button>
 		</view>
 
 		<view class="swiper">
@@ -36,17 +36,16 @@
 		</view>
 		<!-- <u-swiper class="swiper mx-1" :list="wisperImage" previousMargin="30" nextMargin="30" circular :autoplay="false"
 			radius="5" bgColor="#ffffff"></u-swiper> -->
-		<u-swiper class=" m-1" :list="wisperImage" indicator indicatorMode="line" circular
-			radius="5" bgColor="#ffffff">
+		<u-swiper class=" m-1" :list="wisperImage" indicator indicatorMode="line" circular radius="5" bgColor="#ffffff">
 		</u-swiper>
-		<view class="m-1 rounded-20 bg-white"> 
+		<view class="m-1 rounded-20 bg-white">
 
-			<u-gap height="10"></u-gap> 
+			<u-gap height="10"></u-gap>
 			<view class="m-1 rounded-20 bg-white">
 				<u-grid :border="false" col="4">
 					<u-grid-item v-for="(listItem,listIndex) in appManage" :key="listIndex" @click="dev(listIndex)">
 						<navigator :url="listItem.path" class="nav">
-							<u--image class="appManeger_block_icon" :src="listItem.icon"  height="90upx" width="90upx">
+							<u--image class="appManeger_block_icon" :src="listItem.icon" height="90upx" width="90upx">
 							</u--image>
 							<u--text :text="listItem.name" align="center"></u--text>
 						</navigator>
@@ -77,13 +76,13 @@
 			home() {
 				return home
 			}
-		}, 
+		},
 		data() {
 			return {
-				workStatu:'关闭值班',
+				workStatu: '关闭值班',
 				token: uni.getStorageSync('access-token'),
 				wisperImage,
-				appManage, 
+				appManage,
 				appFeature,
 				homePageIcons,
 				avatar: 'https://cdn.uviewui.com/uview/album/1.jpg',
@@ -100,8 +99,10 @@
 		},
 		//第一次加载
 		onLoad() {
-			this.userInfo = uni.getStorageSync('userInfo')
-			this.uid = this.userInfos
+			console.log(uni.getStorageSync('userInfo'), 111)
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			this.uid = this.userInfo
+			console.log('onLoad', this.uid)
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
 
@@ -113,24 +114,96 @@
 		},
 		//页面显示
 		onShow() {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			console.log('onshow', this.userInfo)
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
+			this.getUserInfo();
 		},
 		//方法
 		methods: {
-			changeStatu(){
-				if(this.workStatu == '关闭值班'){
+			getUserInfo() {
+				this.$http
+					.post('/user/info', {
+						id: this.uid,
+					})
+					.then(res => {
+						console.log(res)
+						this.userInfo = res.data
+						console.log(this.userInfo)
+						console.log(this.userInfo.id_card)
+						if (this.userInfo) {
+							if (this.userInfo.fullname) {
+								this.name = this.userInfo.fullname
+							}
+							if (this.userInfo.sex_cn) {
+								this.genderText = this.userInfo.sex_cn
+							}
+							if (this.userInfo.birthday) {
+								this.birth = this.userInfo.birthday
+							}
+							if (this.userInfo.mobile) {
+								this.tel = this.userInfo.mobile
+							}
+							if (this.userInfo.mobile) {
+								this.tel = this.userInfo.mobile
+							}
+							if (this.userInfo.stature) {
+								this.height = this.userInfo.stature
+							}
+							if (this.userInfo.weight) {
+								this.weight = this.userInfo.weight
+							}
+							if (this.userInfo.id_card) {
+								this.idCardNumberValue = this.userInfo.id_card
+								console.log('idCardNumberValue', this.idCardNumberValue);
+							}
+							if (this.userInfo.type_cn) {
+								this.relationShipText = this.userInfo.type_cn
+								console.log('relationShipText', this.relationShipText);
+							}
+						} else {
+							uni.showToast({
+								title: '数据出错',
+								icon: 'none',
+								duration: 2000,
+							})
+						}
+					})
+				// this.$http.post('/user/sig', {
+				// 		uid: this.uid
+				// 	}).then((res) => {
+				// 		console.log(res)
+				// 		if (res.code == 20000) {
+				// 			// uni.setStorageSync('access-token', res.data)
+				// 			console.log('token', uni.getStorageSync('access-token'))
+				// 			this.getAllHistoryList()
+
+				// 		} else {
+				// 			uni.showToast({
+				// 				title: '切换失败',
+				// 				icon: 'none',
+				// 				duration: 2000,
+				// 			})
+				// 		}
+				// 	})
+				// 	.catch((error) => {
+				// 		console.log(error)
+				// 	})
+			},
+			changeStatu() {
+				if (this.workStatu == '关闭值班') {
 					this.workStatu = '开启值班'
-				}else{
+				} else {
 					this.workStatu = '关闭值班'
 				}
 			},
 			//开发中...
-			dev(listIndex){
-				if(listIndex == 3 || listIndex >= 6){
+			dev(listIndex) {
+				if (listIndex == 3 || listIndex >= 6) {
 					uni.showToast({
-						title:"开发中...",
-						icon:"none"
+						title: "开发中...",
+						icon: "none"
 					})
 				}
 			},
@@ -207,7 +280,7 @@
 
 	.statusBar {
 		border-radius: 30%;
-		background-color: white; 
+		background-color: white;
 
 	}
 
@@ -241,12 +314,13 @@
 		align-items: center;
 	}
 
-	.nav{
+	.nav {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 	}
+
 	.appFeature {
 		border-radius: 50px;
 		padding: 10px;
@@ -276,7 +350,7 @@
 	.appManeger {
 		&_block {
 			height: 180upx;
-			
+
 			&_icon {
 				padding-top: 20rpx;
 				padding-bottom: 15upx;
