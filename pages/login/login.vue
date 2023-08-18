@@ -65,6 +65,9 @@
 
 <script>
 	import md5 from '@/plugins/md5'
+	import {
+		baseUrl
+	} from '@/config/baseUrl.js'
 	var clear
 	export default {
 		data() {
@@ -124,27 +127,21 @@
 
 				//发送验证码接口(未实现)
 				uni.request({
-					url: 'http://127.0.0.1:8000/api/login/getCode',
+					url: baseUrl + '/login/getCode',
 					method: "POST",
 					data: {
 						mobile: this.form.phonenum,
 						type: 'reset'
 					},
 				}).then((res) => {
-					console.log(res);
-					this.form.pass = res[1].data.message
-					this.getCodeState()
+					if (Array.isArray(res)) {
+						this.form.pass = res[1].data.message
+						this.getCodeState()
+					} else {
+						this.form.pass = res.data.message
+						this.getCodeState()
+					}
 				})
-
-				//发送验证码接口(未实现)
-				// this.$http.post('/login/getCode', {
-				// 	mobile: this.form.phonenum,
-				// 	type: 'reset'
-				// }).then((res) => {
-				// 	console.log(res);
-				// 	this.form.pass = res.message
-				// 	this.getCodeState()
-				// })
 			},
 			//验证码按钮文字状态
 			getCodeState() {
@@ -193,123 +190,169 @@
 
 
 					uni.request({
-							url: 'http://127.0.0.1:8000/api/login/login',
+							url: baseUrl + '/login/login',
 							method: "POST",
 							data: {
 								mobile: this.form.phonenum,
 								code: this.form.code,
-								utype:1
-								
+								utype: 1
 							},
 						}).then((res) => {
 							console.log('res', res)
-							//登录成功
-							if (res[1].data.code == 20000) {
-								uni.setStorageSync('access-token', res[1].data.data.token)
-								const uid = uni.getStorageSync('access-token')
-								const parts = uid.split('.');
-								const payload = JSON.parse(atob(parts[1])); // 解码并解析负载
+							if (Array.isArray(res)) {
+								//登录成功
+								if (res[1].data.code == 20000) {
+									uni.setStorageSync('access-token', res[1].data.data.token)
+									const uid = uni.getStorageSync('access-token')
+									const parts = uid.split('.');
+									const payload = JSON.parse(atob(parts[1])); // 解码并解析负载
 
-								// 提取"Audience"字段的值
-								const audience = payload.aud;
-								uni.setStorageSync('userInfo', audience)
-								console.log('this.uid', uni.getStorageSync('userInfo'))
-								if(!uni.getStorageSync('userInfo')){
-									this.$http.post("/user/create", {
-									mobile: this.form.phonenum,
-									code: this.form.pass,
-									type: 0,
-									utype: "1"
-								}).then((res) => {
-									console.log(1111111111, res)
-									// 第一次登录成功的处理逻辑
-									uni.setStorageSync('userInfo', res.data.uid)
-									console.log("第一次登录");
+									// 提取"Audience"字段的值
+									const audience = payload.aud;
+									uni.setStorageSync('userInfo', audience)
+									console.log('this.uid', uni.getStorageSync('userInfo'))
+									if (!uni.getStorageSync('userInfo')) {
+										this.$http.post("/user/create", {
+											phone: this.form.phonenum,
+											code: this.form.pass,
+											type: 0,
+											utype: "1"
+										}).then((res) => {
+											console.log(1111111111, res)
+											console.log('第一次登陆')
+											uni.setStorageSync('userInfo', res.data.uid)
+											console.log('this.uid', uni.getStorageSync('userInfo'))
+											// 第一次登录成功的处理逻辑
+											uni.showToast({
+												title: '登录成功',
+												duration: 2000,
+												success: () => {
+													setTimeout(() => {
+														uni.switchTab({
+															url: '/pages/homePage/homePage',
+															success: (res) => {
+																console.log(
+																	res)
+															},
+															fail: (err) => {
+																console.log(
+																	err)
+															},
+														})
+													}, 1000)
+												},
+											})
+										})
+									} else {
+										console.log('第二次登录')
+										uni.setStorageSync('access-token', res[1].data.data.token)
+										const uid = uni.getStorageSync('access-token')
+										const parts = uid.split('.');
+										const payload = JSON.parse(atob(parts[1])); // 解码并解析负载
+										// 提取"Audience"字段的值
+										const audience = payload.aud;
+										uni.setStorageSync('userInfo', audience)
+										console.log('this.uid', uni.getStorageSync('userInfo'))
+										uni.showToast({
+											title: '登录成功',
+											duration: 2000,
+											success: () => {
+												setTimeout(() => {
+													uni.switchTab({
+														url: '/pages/homePage/homePage',
+														success: (res) => {
+															console.log(res)
+														},
+														fail: (err) => {
+															console.log(err)
+														},
+													})
+												}, 1000)
+											},
+										})
+									}
+								}
+								//登陆失败
+								else {
 									uni.showToast({
-										title: '登录成功',
+										title: '登陆失败',
+										icon: 'none',
 										duration: 2000,
-										success: () => {
-											setTimeout(() => {
-												uni.switchTab({
-													url: '/pages/homePage/homePage',
-													success: (res) => {
-														console.log(res)
-													},
-													fail: (err) => {
-														console.log(err)
-													},
-												})
-											}, 1000)
-										},
-									})
-									})
-								}else{
-									console.log('第二次登录')
-									uni.showToast({
-										title: '登录成功',
-										duration: 2000,
-										success: () => {
-											setTimeout(() => {
-												uni.switchTab({
-													url: '/pages/homePage/homePage',
-													success: (res) => {
-														console.log(res)
-													},
-													fail: (err) => {
-														console.log(err)
-													},
-												})
-											}, 1000)
-										},
 									})
 								}
-								// uni.request({
-								// 	url:'http://127.0.0.1:8000/api/login/getCode',
-								// 	method:"POST",
-								// 	data:{
-								// 		mobile: this.form.phonenum,
-								// 		type: 'reset'
-								// 	}.then((res) => {
-								// 		console.log(111111111111,res);
-								// 		this.form.pass = res[1].data.message
+							} else {
+								if (res.data.code == 20000) {
+									uni.setStorageSync('access-token', res.data.data.token)
+									const uid = uni.getStorageSync('access-token')
+									const parts = uid.split('.');
+									const payload = JSON.parse(atob(parts[1])); // 解码并解析负载
 
-								// 	})
-								// })
-								// if (!res.data.uid) {
-
-								// } else {
-								// 	uni.setStorageSync('userInfo', res.data.uid)
-								// 	console.log(uni.getStorageSync('userInfo'));
-								// 	uni.setStorageSync('User', JSON.stringify(res.data))
-								// 	uni.showToast({
-								// 		title: '登录成功',
-								// 		duration: 2000,
-								// 		success: () => {
-								// 			setTimeout(() => {
-								// 				uni.switchTab({
-								// 					url: '/pages/homePage/homePage',
-								// 					success: (res) => {
-								// 						console.log(res)
-								// 					},
-								// 					fail: (err) => {
-								// 						console.log(err)
-								// 					},
-								// 				})
-								// 			}, 1000)
-								// 		},
-								// 	})
-								// }
-
-
+									// 提取"Audience"字段的值
+									const audience = payload.aud;
+									uni.setStorageSync('userInfo', audience)
+									console.log('this.uid', uni.getStorageSync('userInfo'))
+									if (!uni.getStorageSync('userInfo')) {
+										this.$http.post("/user/create", {
+											phone: this.form.phonenum,
+											code: this.form.pass,
+											type: 0,
+											utype: "1"
+										}).then((res) => {
+											console.log(1111111111, res)
+											// 第一次登录成功的处理逻辑
+											uni.setStorageSync('userInfo', res.data.uid)
+											console.log("第一次登录");
+											uni.showToast({
+												title: '登录成功',
+												duration: 2000,
+												success: () => {
+													setTimeout(() => {
+														uni.switchTab({
+															url: '/pages/homePage/homePage',
+															success: (res) => {
+																console.log(
+																	res)
+															},
+															fail: (err) => {
+																console.log(
+																	err)
+															},
+														})
+													}, 1000)
+												},
+											})
+										})
+									} else {
+										console.log('第二次登录')
+										uni.showToast({
+											title: '登录成功',
+											duration: 2000,
+											success: () => {
+												setTimeout(() => {
+													uni.switchTab({
+														url: '/pages/homePage/homePage',
+														success: (res) => {
+															console.log(res)
+														},
+														fail: (err) => {
+															console.log(err)
+														},
+													})
+												}, 1000)
+											},
+										})
+									}
+								}
+								//登陆失败
+								else {
+									uni.showToast({
+										title: '登陆失败',
+										icon: 'none',
+										duration: 2000,
+									})
+								}
 							}
-							//登陆失败
-							else {
-								uni.showToast({
-									title: '登陆失败',
-									icon: 'none',
-									duration: 2000,
-								})
-							}
+
 						})
 						.catch((error) => {
 							console.log(error)
