@@ -9,7 +9,9 @@
 					:icon-style="iconStyle" title="执页属性" :isLink="true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
-				<!-- <u-cell @click="showpfdModal" titleStyle="font-size: 14px" size="large" icon="star-fill"
+
+				<u-cell @click="showpfdModal" titleStyle="font-size: 14px" size="large" icon="star-fill"
+
 					:icon-style="iconStyle" title="擅长领域" :isLink="true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
@@ -21,17 +23,18 @@
 					:icon-style="iconStyle" title="职称" :value="birth" :isLink="true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
-				<u-cell @click="" class="message" titleStyle="font-size: 14px" size="large" icon="star-fill"
+				<!-- <u-cell @click="" class="message" titleStyle="font-size: 14px" size="large" icon="star-fill"
 					:icon-style="iconStyle" title="执业证书" :value="birth" :isLink="true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
 				<u-cell @click="" class="message" titleStyle="font-size: 14px" size="large" icon="star-fill"
 					:icon-style="iconStyle" title="其他证书" :value="birth" :isLink="true">
 					<text slot="value" class="u-slot-value"></text>
-				</u-cell> -->
+				</u-cell> --> -->
 			</u-cell-group>
 			<u-gap height="10"></u-gap>
-			<!-- <u-cell-group :border="false" class="message">
+			<u-cell-group :border="false" class="message">
+
 				<u-cell size="large" icon="star-fill" :icon-style="iconStyle" title="选择省份" titleStyle="font-size: 14px"
 					:isLink="true" @click="showareaModal = true">
 					<text slot="value" class="u-slot-value"></text>
@@ -52,23 +55,30 @@
 					:isLink="true" @click="showRelation = true">
 					<text slot="value" class="u-slot-value"></text>
 				</u-cell>
-			</u-cell-group> -->
+
+			</u-cell-group>
 		</view>
-		<u-picker mode="selector" :columns="attr" :show="showattr" close-on-click-overlay @cancel="cancel0"
-			@close="close0" @confirm="confirm0">
+		<u-picker :columns="attr" :show="showattr" close-on-click-overlay @cancel="cancel0" @close="close0"
+                      @confirm="confirm0">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
 		</u-picker>
-		<!-- <picker :value="attrText" :range="attr" range-key="name"></picker>> -->
 		<u-picker :columns="pfd" :show="showpfd" close-on-click-overlay @cancel="cancel0" @close="close0"
-			@confirm="confirm0">
-			<template #cancel>
-				<div>取消</div>
-			</template>
-			<template #confirm>
-				<div>确定</div>
-			</template>
+                      @confirm="confirm0">
+					  <template #cancel>
+						<div>取消</div>
+					</template>
+					<template #confirm>
+						<div>确定</div>
+					</template>
 		</u-picker>
 		<u-picker :columns="area" :show="showarea" close-on-click-overlay @cancel="cancel0" @close="close0"
-			@confirm="confirm0"></u-picker>
+                      @confirm="confirm0"></u-picker>
+
 	</view>
 </template>
 
@@ -85,26 +95,13 @@
 					"font-size": '10px',
 					"color": 'red'
 				},
-				attr: [],
-				pfd: [
-					[]
-				],
-				depa: [
-					[],
-					[]
-				],
-				job: [
-					[],
-					[]
-				],
-				organ: [
-					[],
-					[]
-				],
-				area: [
-					[],
-					[]
-				],
+
+				attr:[[]],
+				pfd:[[]],
+				depa:[[],[]],
+				job:[[],[]],
+				organ:[[],[]],
+				area: [[],[]],
 				userInfo: {
 					name: '',
 				},
@@ -121,8 +118,9 @@
 				gender: '',
 				relationShipText: '',
 				chooseDate: Number(new Date()),
-
 				attrText: '',
+
+
 				showattr: false,
 				showpfd: false,
 				showdepa: false,
@@ -194,8 +192,9 @@
 				codeMsg: '',
 			}
 		},
-		onLoad: function(opt) {
-			console.log(opt.e);
+		onLoad: function (opt) {
+			console.log(opt.e); 
+
 			this.selectUser()
 			// console.log(111)
 			// _this = this;
@@ -209,27 +208,26 @@
 			// 		console.log('id',uni.getStorageSync('userInfo'));
 			// 	}
 
+				
 			// }
 		},
-		methods: {
-			selectUser() {
-				this.$http.post("/practice/getConfig", {}).then((res) => {
+		methods:{
+			selectUser(){
+				this.$http.get("/practice/getConfig",{}).then((res)=>
+				{
 					console.log(res);
-					this.attr = res.data.attr;
-					// for (let i = 0; i < res.data.pfd.length; i++) this.pfd[0][i] = res.data.pfd[i].name;
-					// for (let i = 0; i < res.data.depa.length; i++) this.depa[i] = res.data.depa[i].name;
-					// for (let i = 0; i < res.data.job.length; i++) this.job[i] = res.data.job[i].name;
-					// for (let i = 0; i < res.data.organ.length; i++) this.organ[i] = res.data.organ[i].name;
-					// for (let i = 0; i < res.data.attr.length; i++) {
-					// 	this.attr.push(`attr[${i}]`);
-					// }
-					// console.log('pfd', this.pfd);
-					// console.log('depa', this.depa);
-					// console.log('job', this.job);
-					// console.log('organ', this.organ);
-					// console.log('area', this.area);
-					this.$forceUpdate();
-
+					for(let i=0;i<res.data.attr.length;i++) this.attr[0].splice(i,1,res.data.attr[i].name);
+					for(let i=0;i<res.data.pfd.length;i++) this.pfd[0].splice(i,1,res.data.pfd[i].name);
+					for(let i=0;i<res.data.depa.length;i++) this.depa[0].splice(i,1,res.data.depa[i].name);
+					for(let i=0;i<res.data.job.length;i++) this.job[0].splice(i,1,res.data.job[i].name);
+					for(let i=0;i<res.data.organ.length;i++) this.organ[0].splice(i,1,res.data.organ[i].name);
+					for(let i=0;i<res.data.area.length;i++) this.area[0].splice(i,1,res.data.area[i].name);
+					console.log('attr',this.attr);
+					console.log('pfd',this.pfd);
+					console.log('depa',this.depa);
+					console.log('job',this.job);
+					console.log('organ',this.organ);
+					console.log('area',this.area);
 				})
 			},
 			btn0() {
@@ -251,6 +249,7 @@
 				this.show2 = false
 			},
 			confirm0(e) {
+				this.city = e.value[0]
 				this.show1 = true
 				this.show0 = false;
 			},
@@ -524,6 +523,8 @@
 			return this.wxShare()
 		},
 	}
+				
+
 </script>
 
 <style lang="scss">

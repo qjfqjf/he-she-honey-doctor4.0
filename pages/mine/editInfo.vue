@@ -167,6 +167,9 @@
 	import {
 		use
 	} from "../../static/js/echarts";
+	import {
+		baseUrl
+	} from '@/config/baseUrl.js'
 	export default {
 		data() {
 			return {
@@ -313,7 +316,7 @@
 			},
 			getCode() {
 				uni.request({
-					url: 'https://new-hn.ttmjk.com/api/login/getCode',
+					url:baseUrl +  '/login/getCode',
 					method: "POST",
 					data: {
 						mobile: this.tel,
