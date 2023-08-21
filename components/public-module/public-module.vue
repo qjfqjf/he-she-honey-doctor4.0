@@ -7,7 +7,7 @@
 		<applets-bind-userInfo></applets-bind-userInfo>
 		<!-- #endif -->
         <!-- #ifdef APP-PLUS -->
-        <guide-pages></guide-pages>
+        <!-- <guide-pages></guide-pages> -->
         <!-- #endif -->
 	</view>
 </template>
