@@ -76,6 +76,7 @@
 					:value="birth" :isLink="true" icon="star-fill" :icon-style="iconStyle">
 					<text slot="value" class="u-slot-value">{{ birth }}</text>
 				</u-cell>
+				<!-- 二维码 -->
 				<u-cell class="message" titleStyle="font-size: 14px" size="large" title="二维码名片" :isLink="true">
 					<view slot="value" @click="previewImg">
 						<uqrcode ref="uqrcode" canvas-id="qrcode" :value="qrCodeConfig.value" :size='qrCodeConfig.size'
@@ -297,26 +298,25 @@
 		//方法
 		methods: {
 			previewImg() {
-				// console.log('imgList', imgList)
-				let img = ''
-				// this.$refs.uqrcode.size = 400
-				this.$refs.uqrcodebig.toTempFilePath({
-					success: res => {
-						console.log(res);
-						img = res.tempFilePath
-					}
-				});
-				// 预览图片
-				uni.previewImage({
-					current: img,
-					urls: [img],
-					indicator: 'none'
-				})
-				// this.$refs.uqrcode.size = 80
+			    this.$refs.uqrcodebig.toTempFilePath({
+			        success: res => {
+			            console.log(222222222, res);
+			            
+			            // 直接预览生成的临时文件路径
+			            uni.previewImage({
+			                current: res.tempFilePath,
+			                urls: [res.tempFilePath],
+			                indicator: 'none'
+			            });
+			        },
+			        fail: (err) => {
+			            console.error('生成临时文件路径失败', err);
+			        }
+			    });
 			},
 			getCode() {
 				uni.request({
-					url:baseUrl +  '/login/getCode',
+					url: baseUrl + '/login/getCode',
 					method: "POST",
 					data: {
 						mobile: this.tel,
