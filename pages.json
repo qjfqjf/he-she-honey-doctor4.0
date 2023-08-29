@@ -628,6 +628,13 @@
             }
         },
         {
+            "path" : "pages/mine/addComment",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
             "path" : "pages/mine/order",
             "style" : {
                 "navigationBarTitleText" : "",
@@ -1067,6 +1074,27 @@
             }
         },
         {
+            "path" : "pages/healthEstimate/health/search",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
+            "path" : "pages/healthEstimate/health/Exam/Exam",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
+            "path" : "pages/healthEstimate/health/Exam/index",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
             "path" : "pages/healthEstimate/conditioning/conditioning",
             "style" : {
                 "navigationBarTitleText" : "",
@@ -1187,6 +1215,27 @@
         },
         {
             "path" : "pages/WorkOrderCoordination/WorkOrderCoordination",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
+            "path" : "pages/WorkOrderCoordination/workAndService/work",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
+            "path" : "pages/WorkOrderCoordination/workAndService/service",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
+            "path" : "pages/WorkOrderCoordination/workAndService/workview",
             "style" : {
                 "navigationBarTitleText" : "",
                 "enablePullDownRefresh" : false

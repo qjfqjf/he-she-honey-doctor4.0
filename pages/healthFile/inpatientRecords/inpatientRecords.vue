@@ -197,7 +197,7 @@
 		getRecordsList(){
 			//接口调用
       this.$http.post(this.tourl2, {
-          uid: '172',
+          uid: uni.getStorageSync('userInfo'),
           type: 2
       })
       .then((response) => {

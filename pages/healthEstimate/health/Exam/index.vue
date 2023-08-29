@@ -60,6 +60,7 @@
 		searchData(){
 			this.$http.post(this.toUrl,{
 				id:this.id,
+				area_type: 2
 			}).then(res=>{
 				console.log('res',res);
 				// this.avatar = imgUrl;

@@ -96,7 +96,8 @@
 
 
 				this.$http.get('/mmpt_question/index', {
-						name: this.searchText
+						name: this.searchText,
+						// area_type: 2
 					})
 					.then(res => {
 						console.log('res',res);
