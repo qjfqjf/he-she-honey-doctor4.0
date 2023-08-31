@@ -3,7 +3,7 @@
 			<z-nav-bar title="工单统筹"></z-nav-bar>
 					<view class="d-flex">
 							<view class="m-1 f-grow-1 d-flex j-center a-center rounded-20 py-2" style="background-color: lightpink">
-								<view class="flex-column d-flex">
+								<view class="flex-column d-flex" @click = "worker()">
 									<u--image class="appManeger_block_icon" style="margin: auto;" src="/static/icon/homePage/Glu.png"
 														:customStyle="{paddingLeft:15+'rpx'}" height="100upx" width="100upx">
 									</u--image>
@@ -11,7 +11,7 @@
 								</view>
 							</view>
 							<view class="m-1 f-grow-1 d-flex j-center a-center rounded-20 py-2" style="background-color: hotpink">
-								<view class="flex-column d-flex">
+								<view class="flex-column d-flex" @click = "work()">
 									<u--image style="margin: auto" class="appManeger_block_icon" src="/static/icon/homePage/Glu.png"
 														:customStyle="{paddingLeft:15+'rpx'}" height="100upx" width="100upx">
 									</u--image>
@@ -64,6 +64,11 @@
 			}
 		},
 		methods: {
+			worker(){
+				uni.navigateTo({
+					url:'/pages/mine/editInfo?type=' +'add'
+				})
+			},
 			service(){
 				uni.navigateTo({
 					url:'/pages/WorkOrderCoordination/workAndService/service'

@@ -41,7 +41,7 @@
           {
             img: require('@/static/icon/healthTreatment/psychology.png'),
             title: '心理调试',
-            url: '/pages/healthTreatment/psychological/psychological'
+            url: '/pages/healthTreatment/psychology/psychology'
           },
           {
             img: require('@/static/icon/healthTreatment/infrared.png'),

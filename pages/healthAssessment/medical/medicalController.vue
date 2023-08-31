@@ -2,7 +2,7 @@
     <view>
         <z-nav-bar title="医疗管理">
             <view slot="right" class="p-2" @click="addRecords">
-                <image style="width: 40rpx;height: 40rpx;" src="/static/icon/healthTreatment/addRecords.png"></image>
+                <image style="width: 40rpx;height: 40rpx;" src="/static/icon/healthAssessment/addRecords.png"></image>
             </view>
         </z-nav-bar>
         <public-module></public-module>
@@ -49,7 +49,7 @@ export default {
     methods: {
         addRecords(){
         uni.navigateTo({
-            url:'/pages/healthTreatment/medicalTreatment/addSymptomSelfReport?type=' + 1
+            url:'/pages/healthAssessment/medical/addSymptomSelfReport?type=' + 1
         })
       },
         getDoctorAdvice() {

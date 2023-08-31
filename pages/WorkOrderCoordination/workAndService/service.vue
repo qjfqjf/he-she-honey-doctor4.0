@@ -8,10 +8,10 @@
 		<view class="u-demo-block">
 			<view class="u-demo-block__content">
 				<u-cell-group :border="true" class="message" display="flex">
-				<u-cell @click="showNameModal" titleStyle="font-size: 14px" size="large" title="会员" :isLink="true">
+				<u-cell @click="showNameModal" titleStyle="font-size: 14px" size="large" title="服务人员" :isLink="true">
 					<text slot="value" class="u-slot-value">{{ name }}</text>
 				</u-cell>
-				<u-cell @click="selectDoctor" size="large" titleStyle="font-size: 14px" title="服务人员" :isLink="true">
+				<u-cell @click="selectDoctor" size="large" titleStyle="font-size: 14px" title="会员" :isLink="true">
 					<text slot="value" class="u-slot-value">{{ didName }}</text>
 				</u-cell>
 			</u-cell-group>
@@ -50,7 +50,7 @@
             
             
             <u-datetime-picker :show="showdate" v-model="chooseDate" :min-date="new Date().getTime()"
-			:max-date="new Date('2070/12/31').getTime()" mode="date" closeOnClickOverlay @confirm="confirmdata()"
+			:max-date="new Date('2070/12/31').getTime()" mode="date" closeOnClickOverlay @confirm="change = true"
 			@cancel="showdate = false" @close="() => (showdate = false)"></u-datetime-picker>
 		</view>
 		<!-- <z-navigation></z-navigation> -->
@@ -64,6 +64,7 @@
                 showdate:false,
                 showCreateTime:false,
                 showEndTime:false,
+                change: false,
 				addtext:'提交',
                 placeholder2:'请输入工单内容',
                 chooseDate: Number(new Date()),
@@ -81,7 +82,8 @@
                     end_time: this.formatDate(new Date()),
                     save_id:0,
                     content:''
-                },[],[]]
+                },[],[]],
+                filteredArray:[],
 			}
 		},
 		onLoad: function () {
@@ -119,6 +121,7 @@
 				const day = String(date.getDate()).padStart(2, '0') // 注意日期需要补齐位数
 				this.date = `${year}-${month}-${day}`
 				this.showdate = false
+                this.change = false
             },
 			getwork(){
 				this.$http.post('/user/info',{
@@ -130,28 +133,62 @@
 				})
 			},
             savework(){
-                console.log("dataList",this.dataList);
-                var filteredArray = this.dataList.filter(function(value) {
-                    return value !== null && value !== undefined && value !== '';
+                this.dataList.forEach(element => {
+                    element.save_id = 0
+                    if(element.content!=null && element.content!='')this.filteredArray.push(element);
                 });
+                if(this.filteredArray.length==0){
+                    uni.showToast({
+                            title: '输入工单内容',
+                            icon:'none',
+                            duration:2000
+                        })
+                }
                 this.$http.post('/work/create',{
-                    did:this.did,
-                    data:filteredArray,
+                    uid: this.did,
+                    did: uni.getStorageSync('userInfo'),
+                    data:this.filteredArray,
                     date:this.date,
                 }).then((res)=>{
                     console.log(res);
+                    if(res.message=='提交成功'){
+                        uni.showToast({
+                            title: '提交成功',
+                            icon:'success',
+                            duration:2000
+                        })
+                    }else{
+                        uni.showToast({
+                            title: '提交失败',
+                            icon:'none',
+                            duration:2000
+                        })
+                    }
+                
                 })
+                    localStorage.setItem('',this.data)
+                    localStorage.setItem('',this.date)
+                    localStorage.setItem('',this.did)
             },
 			selectDoctor(){
                 let index = '服务人员'
-                localStorage.setItem('data',this.data)
+                // localStorage.setItem('data',this.data)
                 localStorage.setItem('date',this.date)
                 localStorage.setItem('did',this.did)
 				uni.navigateTo({
 			    	url:'/pages/message/addressBook?title=' + index
 			  })
 			}
-		}
+		},
+        watch: {
+        change: function (newVal, oldVal) {
+            // 当 this.chooseDate 发生变化时，将会触发这个函数
+            console.log('change 变化啦！新值为：', newVal);
+            console.log('旧值为：', oldVal);
+            if (this.change) this.confirmdata()
+            // 在这里可以执行其他逻辑或操作，根据新的值做出相应的处理
+        }
+    }
 	}
 </script>
 

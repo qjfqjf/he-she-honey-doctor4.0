@@ -1,18 +1,17 @@
 <template>
     <view>
-        <z-nav-bar title="医疗管理">
-            <view slot="right" class="p-2" @click="addRecords">
-                <image style="width: 40rpx;height: 40rpx;" src="/static/icon/healthTreatment/addRecords.png"></image>
-            </view>
+        <z-nav-bar title="咨询详情">
         </z-nav-bar>
         <public-module></public-module>
 
         <!-- 内容 -->
         <view class="container">
-            <view class="item" v-for="(item, index) in baseList" :key="index">
-                <view class="public name">{{ item.name }}</view>
-                <view class="public content">内容：{{ item.content }}</view>
-                <view class="public date">时间：{{ item.date }}</view>
+            <view class="item">
+                <view class="public name">医生：{{ data.fullname }}</view>
+                <view class="public date">时间：{{ data.time }}</view>
+                <view class="public date">调适记录描述: {{ data.record }}</view>
+                <view class="public date">心理建议描述: {{ data.propose }}</view>
+                <view class="public date">自诉描述: {{ data.ppn }}</view>
             </view>
         </view>
     </view>
@@ -40,29 +39,27 @@ export default {
                 //   remarks: '一定记得'
                 // },
             ],
-            data: {}
+            data: {},
+            id:'',
         };
     },
     onLoad: function (option) {
+        this.id = option.id;
         this.getDoctorAdvice()
     },
     methods: {
-        addRecords(){
-        uni.navigateTo({
-            url:'/pages/healthTreatment/medicalTreatment/addSymptomSelfReport?type=' + 1
-        })
-      },
         getDoctorAdvice() {
-            this.$http.post('/medical_file/index', {
-                type: 1
+            this.$http.post('/psy_consult/info', {
+                id: this.id
             }).then((res) => {
-                res.data.data.forEach(element => {
-                    const newData = {};
-                    newData.name = element.fullname;
-                    newData.content = element.recipel;
-                    newData.date = element.time;
-                    this.baseList.push(newData);
-                });
+                this.data = res.data
+                // res.data.data.forEach(element => {
+                //     const newData = {};
+                //     newData.name = element.fullname;
+                //     newData.content = element.recipel;
+                //     newData.date = element.time;
+                //     this.baseList.push(newData);
+                // });
             })
         }
     }

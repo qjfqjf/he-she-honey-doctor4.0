@@ -769,6 +769,13 @@
             }
         },
         {
+            "path" : "pages/healthAssessment/medical/medicalController",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "enablePullDownRefresh" : false
+            }
+        },
+        {
             "path" : "pages/healthAssessment/psychology/psychology",
             "style" : {
                 "navigationBarTitleText" : "",
@@ -1158,7 +1165,7 @@
             }
         },
         {
-            "path" : "pages/healthTreatment/medicalTreatment/add",
+            "path" : "pages/healthTreatment/medicalTreatment/addSymptomSelfReport",
             "style" : {
                 "navigationBarTitleText" : "",
                 "enablePullDownRefresh" : false
@@ -1207,12 +1214,26 @@
             }
         },
         {
-            "path" : "pages/healthTreatment/psychological/psychological",
-            "style" : {
-                "navigationBarTitleText" : "",
-                "enablePullDownRefresh" : false
-            }
-        },
+			"path": "pages/healthTreatment/psychology/psychology",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/healthTreatment/psychology/psychologyIndex",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/healthTreatment/psychology/addPsychology",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
         {
             "path" : "pages/WorkOrderCoordination/WorkOrderCoordination",
             "style" : {

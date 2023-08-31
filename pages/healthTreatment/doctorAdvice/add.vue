@@ -1,6 +1,10 @@
 <template>
 	<view>
-		<z-nav-bar title="医嘱"></z-nav-bar>
+		<z-nav-bar title="医嘱">
+			<view slot="right" class="p-2" @click="save">
+        	提交
+      	</view>
+		</z-nav-bar>
 		<uni-card title="请填写医嘱内容" style="height: 350upx;">
 			<u--textarea
 				v-model="content"
@@ -53,6 +57,27 @@
 			}
 		},
 		methods: {
+			save(){
+				this.$http.post('/advice/save',{
+					content: this.content,
+					remarks:this.remark,
+					start_date: this.datetimesingle,
+					end_date: '',
+					
+					// type:1
+				}).then((res)=>{
+				res.data.data.forEach(element => {
+					const newData = {};
+					newData.name = element.fullname;
+					newData.content = element.content;
+					newData.date = element.createtime;
+					newData.start_date = element.start_date;
+					newData.end_date = element.end_date;
+					newData.remarks = element.remarks;
+					this.adviceList.push(newData);
+				});
+				})
+			},
 			showObjectModel() {
 				this.showObject = true;
 			}

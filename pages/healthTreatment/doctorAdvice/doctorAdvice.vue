@@ -9,8 +9,10 @@
 		<uni-card :is-shadow="false" v-for="(item, index) in adviceList">
 			<text class="uni-body">{{item.name}}</text></br>
 			<text class="uni-body">内容：{{item.content}}</text></br>
-			<text class="uni-body">时间：{{item.time}}</text></br>
-			<text class="uni-body">备注：{{item.remark}}</text>
+			<text class="uni-body">时间：{{item.date}}</text></br>
+			<text class="uni-body">开始时间：{{item.start_date}}</text></br>
+			<text class="uni-body">结束时间：{{item.end_date}}</text></br>
+			<text class="uni-body">备注：{{item.remarks}}</text>
 		</uni-card>
 	</view>
 </template>
@@ -19,17 +21,31 @@
 	export default {
 		data() {
 			return {
-				adviceList: [{
-					name: "彭老师",
-					content: "定时定期测血压",
-					time : "2022-08-22 13:31:00",
-					remark:''
-				}]
+				adviceList: []
 			}
 		},
+		onLoad: function (option) {
+			this.getDoctorAdvice()
+		},
 		methods: {
+			getDoctorAdvice(){
+				this.$http.post('/advice/index',{
+					// type:1
+				}).then((res)=>{
+				res.data.data.forEach(element => {
+					const newData = {};
+					newData.name = element.fullname;
+					newData.content = element.content;
+					newData.date = element.createtime;
+					newData.start_date = element.start_date;
+					newData.end_date = element.end_date;
+					newData.remarks = element.remarks;
+					this.adviceList.push(newData);
+				});
+				})
+			},
+			// 跳转至添加医嘱页面
 			gotoadd() {
-				console.log("111")
 				uni.navigateTo({
 				  url:'/pages/healthTreatment/doctorAdvice/add'
 				})
