@@ -4,7 +4,7 @@
 			<view slot="right" class="p-2" @click="handleWarningRule">预警规则</view>
 		</z-nav-bar>
 		<public-module></public-module>
-		<HealthHeader :name="name" :username="username" @myUser="handleMyUser"></HealthHeader>
+		<HealthHeader  :username="username" @myUser="handleMyUser"></HealthHeader>
 		<!-- tab切换 -->
 		<view class="tab-container d-flex j-center my-3">
 			<view class="tab tab1" :class="{ active: currentTab === 'tab1' }" @click="()=>currentTab = 'tab1'">左侧</view>
@@ -148,9 +148,8 @@
 				serviceId: '0000FFF0-0000-1000-8000-00805F9B34FB', //设备的服务值
 				characteristicId: '0000FFF2-0000-1000-8000-00805F9B34FB', // 设备的特征值
 				userInfo: '',
-				uid: 0, //用户id
-				name: '', //选择之后的名字
-				username: '', //登录开始的名字
+				uid: 0, //用户选择的id
+				username: '', //登录的名字
 				// 底部工具栏
 				page: '',
 				toolList: [{
@@ -177,9 +176,11 @@
 				tag:'left'
 			};
 		},
-		onLoad(e) {
+		onLoad() {
 			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 			this.uid = this.userInfo
+			console.log(111111,this.uid)
+			this.getUserInfo()
 			this.initBlue()
 			if (this.deviceId && this.deviceStatus === 0) {
 				this.connect()
@@ -187,13 +188,20 @@
 		},
 		//页面显示
 		onShow() {
-			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 			uni.$on('backWithData', (data) => {
-				this.uid = data.uid;
-				this.name = data.name;
+			    this.uid = data.uid;
+			    this.username = data.name;
 			});
+			console.log(111111,this.uid)
 		},
 		methods: {
+			getUserInfo(){
+				this.$http.post('/user/info', {
+					id: this.uid,
+				}).then(res => {
+					this.username = res.data.fullname
+				})
+			},
 			handleMyUser() {
 				uni.navigateTo({
 					url: '/pages/homePage/myUsers?type=select' // 跳转到指定的目标页面
@@ -277,33 +285,6 @@
 					this.option.series[0].data[0].value = 0
 				}
 			},
-			// handleSavePressure() {
-			// 	if(this.currentTab === 'tab1'){
-			// 		this.tag = 'left'
-			// 	}else{
-			// 		this.tag = 'right'
-			// 	}
-			// 	this.$http.post('/blood_pressure/create', {
-			// 		uid: this.uid,
-			// 		systolic_pressure: this.measureResult.SYS,
-			// 		diastolic_pressure: this.measureResult.DIA,
-			// 		pulse: this.measureResult.PUL,
-			// 		tag: this.tag,
-			// 		time: this.formatDate(new Date()),
-			// 		type: 1
-			// 	}).then(res => {
-			// 		this.$refs.uToast.show({
-			// 			message: '保存成功',
-			// 			type: 'success',
-			// 		})
-			// 		this.btnColor = '#dadada'
-			// 		this.measureResult.SYS = 0
-			// 		this.measureResult.DIA = 0
-			// 		this.measureResult.PUL = 0
-			// 		this.measureResult.pressure = 0
-			// 		this.option.series[0].data[0].value = 0
-			// 	})
-			// },
 			// 初始化蓝牙
 			initBlue() {
 				uni.openBluetoothAdapter({
@@ -558,7 +539,7 @@
 				return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 			},
 
-		}
+		},
 	}
 </script>
 <script module="echarts" lang="renderjs">

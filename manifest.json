@@ -75,7 +75,9 @@
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
-                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
+                "minSdkVersion" : 21,
+                "targetSdkVersion" : 31
             },
             "sdkConfigs" : {
                 "ad" : {},
@@ -96,7 +98,37 @@
             }
         },
         "compilerVersion" : 3,
-        "nvueLaunchMode" : "fast"
+        "nvueLaunchMode" : "fast",
+        "nativePlugins" : {
+            "My-ECGView" : {
+                "__plugin_info__" : {
+                    "name" : "My-ECGView",
+                    "description" : "心电图工具",
+                    "platforms" : "Android",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
+            },
+            "plugin-BtModule" : {
+                "__plugin_info__" : {
+                    "name" : "plugin-BtModule",
+                    "description" : "蓝牙API原生插件",
+                    "platforms" : "Android",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
+            }
+        }
     },
     "quickapp" : {},
     "mp-weixin" : {

@@ -4,7 +4,7 @@
 			<view slot="right" class="p-2" @click="handleDevelop">预警规则</view>
 		</z-nav-bar>
 		<public-module></public-module>
-		<HealthHeader></HealthHeader>
+		<HealthHeader :username="username" @myUser="handleMyUser"></HealthHeader>
 		<u-read-more class="p-2 mt-3" :toggle="true" closeText="查看更多">
 			<view class="d-flex j-center">
 				<image src="@/static/icon/bodyFat/logo.png" mode="aspectFit"></image>
@@ -60,6 +60,9 @@
 		},
 		data() {
 			return {
+				uid: 0, //用户id
+				username: '', //登录的名字
+				userInfo: '',
 				btnColor: '#dadada',
 				deviceStatus: 0,
 
@@ -176,7 +179,7 @@
 					//体重
 					weight_kg: "0.0",
 					//BMI
-					bmi: "0.0",
+					bmi: "0",
 					//体脂率
 					bodyFatPercent: "0.0",
 					//肌肉率
@@ -200,7 +203,7 @@
 					//基础代谢
 					bmr: "0",
 					//身体年龄
-					physicalAge: "0.0",
+					physicalAge: "0",
 					//脂肪量
 					subcutaneousFatPercent: "0.0",
 					//含水量
@@ -210,102 +213,120 @@
 					//标准体重
 					weight_kg: "0.0",
 					//肥胖等级
-					bodyScore: "0.0",
+					bodyScore: "0",
 					//体型
 					bodyType: "0",
 				}
 			};
 		},
 		async onLoad() {
+			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			this.uid = this.userInfo
+			console.log(111111,this.uid)
+			this.getUserInfo()
 			this.initPrinter()
 			this.timer = setTimeout(() => {
 				this.connectedDevice()
 			}, 2000)
 		},
+		//页面显示
+		onShow() {
+			uni.$on('backWithData', (data) => {
+			    this.uid = data.uid;
+			    this.username = data.name;
+			});
+			console.log(111111,this.uid)
+		},
 		methods: {
+			getUserInfo(){
+				this.$http.post('/user/info', {
+					id: this.uid,
+				}).then(res => {
+					this.username = res.data.fullname
+				})
+			},
+			handleMyUser() {
+				uni.navigateTo({
+					url: '/pages/homePage/myUsers?type=select' // 跳转到指定的目标页面
+				});
+			},
 			handleDevelop() {
 				uni.navigateTo({
-					url: '/pages/healthMonitor/bodyFat/bodyFatHistory'
+					url: '/pages/healthMonitor/bodyFat/bodyFatHistory?uid=' + this.uid,
 				})
 			},
 			handleSave() {
-				this.$http.post('/bmi/create', {
-					uid: 355,
-					weight: 50.7,
-					bmi: 20.3,
-					body_fat_percent: 0,
-					subcutaneous_fat_percent: 0,
-					visceral_fat: 0,
-					muscle_percent: 0,
-					bmr: 0,
-					bone_mass: 0,
-					moisture_percent: 0,
-					physical_age: 0,
-					protein_percent: 0,
-					sm_percent: 0,
-					electrode:8,
-					imp:0,
-					imp2:0,
-					imp3:0,
-					imp4:0,
-					imp5:0,
-					impendences:'0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0',
-					ext_data:'{"left_arm":0.0, "right_arm":0.0, "left_leg":0.0, "right_leg":0.0, "all_body":0.0, "left_arm_kg":0.0, "right_arm_kg":0.0, "left_leg_kg":0.0, "right_leg_kg":0.0, "all_body_kg":0.0, "left_arm_muscle":0.0, "right_arm_muscle":0.0, "left_leg_muscle":0.0, "right_leg_muscle":0.0, "all_body_muscle":0.0, "left_arm_muscle_kg":0.0, "right_arm_muscle_kg":0.0, "left_leg_muscle_kg":0.0, "right_leg_muscle_kg":0.0, "all_body_muscle_kg":0.0}',
-					body_score:0,
-					body_type:0,
-					target_weight:0,
-					standard:'{"water_mass_max":0.0, "water_mass_min":0.0, "bone_max":0.0, "bone_min":0.0, "protein_mass_max":0.0, "protein_mass_min":0.0, "muscle_mass_max":0.0, "muscle_mass_min":0.0, "weight_standard":0.0, "smm_standard":0.0, "bfm_standard":0.0, "bmr_standard":0}',
-					time: this.formatDate(new Date()),
-					// uid: this.uid,
-					// weight: this.weight_kg,
-					// bmi: this.bmi,
-					// body_fat_percent: this.bodyFatPercent,
-					// muscle_percent: this.musclePercent,
-					// subcutaneous_fat_percent: this.subcutaneousFatPercent,
-					// visceral_fat: this.visceralFat,
-					// bmr: this.bmr,
-					// bone_mass: this.boneMass,
-					// moisture_percent: this.moisturePercent,
-					// physical_age: this.physicalAge,
-					// protein_percent: this.proteinPercent,
-					// sm_percent: this.boneMass,
-					// time: this.formatDate(new Date()),
-					// type: 1
-				}).then(res => {
+				if(parseFloat(this.icWeightInfo.bmi).toFixed(1) != 0){
+					this.$http.post('/bmi/create', {
+						uid: this.uid,
+						weight:parseFloat(this.icWeightInfo.weight_kg).toFixed(1), 
+						bmi: parseFloat(this.icWeightInfo.bmi).toFixed(1),
+						body_fat_percent: parseFloat(this.icWeightInfo.bodyFatPercent).toFixed(1),
+						subcutaneous_fat_percent: parseFloat(this.icWeightInfo.subcutaneousFatPercent).toFixed(1),
+						visceral_fat: parseFloat(this.icWeightInfo.visceralFat).toFixed(1),
+						muscle_percent: parseFloat(this.icWeightInfo.musclePercent).toFixed(1),
+						bmr: parseFloat(this.icWeightInfo.bmr),
+						bone_mass: parseFloat(this.icWeightInfo.boneMass).toFixed(1),
+						moisture_percent: parseFloat(this.icWeightInfo.moisturePercent).toFixed(1),
+						physical_age: parseFloat(this.icWeightInfo.physicalAge),
+						protein_percent: parseFloat(this.icWeightInfo.proteinPercent).toFixed(1),
+						sm_percent: parseFloat(this.icWeightInfo.boneMass).toFixed(1),
+						electrode:8,
+						imp:0,
+						imp2:0,
+						imp3:0,
+						imp4:0,
+						imp5:0,
+						impendences:'0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0',
+						ext_data:'{"left_arm":0.0, "right_arm":0.0, "left_leg":0.0, "right_leg":0.0, "all_body":0.0, "left_arm_kg":0.0, "right_arm_kg":0.0, "left_leg_kg":0.0, "right_leg_kg":0.0, "all_body_kg":0.0, "left_arm_muscle":0.0, "right_arm_muscle":0.0, "left_leg_muscle":0.0, "right_leg_muscle":0.0, "all_body_muscle":0.0, "left_arm_muscle_kg":0.0, "right_arm_muscle_kg":0.0, "left_leg_muscle_kg":0.0, "right_leg_muscle_kg":0.0, "all_body_muscle_kg":0.0}',
+						body_score:parseFloat(this.icWeightInfo.bodyScore),
+						body_type:parseFloat(this.icWeightInfo.bodyType),
+						target_weight:parseFloat(this.icWeightInfo.weight_kg).toFixed(1),
+						standard:'{"water_mass_max":0.0, "water_mass_min":0.0, "bone_max":0.0, "bone_min":0.0, "protein_mass_max":0.0, "protein_mass_min":0.0, "muscle_mass_max":0.0, "muscle_mass_min":0.0, "weight_standard":0.0, "smm_standard":0.0, "bfm_standard":0.0, "bmr_standard":0}',
+						time: this.formatDate(new Date()),
+							
+					}).then(res => {
+						this.$refs.uToast.show({
+							message: '保存成功',
+							type: 'success',
+						})
+						this.btnColor = '#dadada'
+						
+					})
+				}else{
 					this.$refs.uToast.show({
-						message: '保存成功',
-						type: 'success',
+						message: '保存失败，请检查网络',
+						type: 'error',
 					})
 					this.btnColor = '#dadada'
-					// this.measureResult.SYS = 0
-					// this.measureResult.DIA = 0
-					// this.measureResult.PUL = 0
-					// this.measureResult.pressure = 0
-					// this.option.series[0].data[0].value = 0
-					// if (this.measureResult.pressure != 0) {
-					// 	this.$refs.uToast.show({
-					// 		message: '保存成功',
-					// 		type: 'success',
-					// 	})
-					// 	this.btnColor = '#dadada'
-					// 	this.measureResult.SYS = 0
-					// 	this.measureResult.DIA = 0
-					// 	this.measureResult.PUL = 0
-					// 	this.measureResult.pressure = 0
-					// 	this.option.series[0].data[0].value = 0
-					// } else {
-					// 	this.$refs.uToast.show({
-					// 		message: '保存失败',
-					// 		type: 'error',
-					// 	})
-					// 	this.btnColor = '#dadada'
-					// 	this.measureResult.SYS = 0
-					// 	this.measureResult.DIA = 0
-					// 	this.measureResult.PUL = 0
-					// 	this.measureResult.pressure = 0
-					// 	this.option.series[0].data[0].value = 0
-					// }
-				})
+					
+					this.icWeightInfo.weight_kg = '0.0'
+					this.icWeightInfo.bmi = '0.0'
+					this.icWeightInfo.bodyFatPercent = '0.0'
+					this.icWeightInfo.musclePercent = '0.0'
+					this.icWeightInfo.weight_lb = '0.0'
+					
+					this.icWeightInfo.subcutaneousFatPercent = '0.0'
+					this.icWeightInfo.visceralFat = '0.0'
+					this.icWeightInfo.moisturePercent = '0.0'
+					this.icWeightInfo.boneMass = '0.0'
+					
+					this.icWeightInfo.musclePercent = '0.0'
+					this.icWeightInfo.boneMass = '0.0'
+					this.icWeightInfo.proteinPercent = '0.0'
+					this.icWeightInfo.bmr = '0'
+					
+					this.icWeightInfo.physicalAge = '0'
+					this.icWeightInfo.subcutaneousFatPercent = '0.0'
+					this.icWeightInfo.moisturePercent = '0.0'
+					this.icWeightInfo.proteinPercent = '0.0'
+					this.icWeightInfo.weight_kg = '0.0'
+					this.icWeightInfo.bodyScore = '0'
+					this.icWeightInfo.bodyType = '0'
+					
+					
+				}
+				
 			},
 			/* 初始化 */
 			initPrinter() {

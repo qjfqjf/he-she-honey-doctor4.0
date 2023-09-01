@@ -19,6 +19,12 @@
                 "navigationBarTitleText" : "新增功能"
             }
         },
+		{
+		    "path" : "pages/testsdk/index",
+		    "style": {
+		    	"navigationBarTitleText": ""
+		    }
+		},
         {
             "path" : "pages/healthMonitor/index",
             "style" : {
@@ -422,6 +428,13 @@
                 "enablePullDownRefresh" : false
             }
         },
+		{
+		    "path" : "pages/healthMonitor/bloodSUA/bloodSUATrend",
+		    "style" : {
+		        "navigationBarTitleText" : "",
+		        "enablePullDownRefresh" : false
+		    }
+		},
         {
             "path" : "pages/healthMonitor/cholesterol/cholesterol",
             "style" : {
@@ -429,6 +442,13 @@
                 "enablePullDownRefresh" : false
             }
         },
+		{
+		    "path" : "pages/healthMonitor/cholesterol/cholestrolTrend",
+		    "style" : {
+		        "navigationBarTitleText" : "",
+		        "enablePullDownRefresh" : false
+		    }
+		},
         {
             "path" : "pages/healthAssessment/index",
             "style" : {
@@ -704,6 +724,21 @@
                 "enablePullDownRefresh" : false
             }
         },
+		{
+			"path": "pages/healthMonitor/ergometer/ergometerTest",
+			"style": {
+				"navigationBarTitleText": "",
+				
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/healthMonitor/ergometer/ergometerIndex",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
         {
             "path" : "pages/template/deviceConnection",
             "style" : {
@@ -711,6 +746,34 @@
                 "enablePullDownRefresh" : false
             }
         },
+		{
+			"path": "pages/template/KitchenDeviceConnection",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/template/ecgDeviceConnection",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/template/JumpRopeConnection",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/template/BodyFatConnection",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
         {
             "path" : "pages/healthFile/index",
             "style" : {

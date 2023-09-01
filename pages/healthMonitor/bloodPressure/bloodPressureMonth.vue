@@ -58,19 +58,16 @@
 		created() {
 			dayjs.extend(isBetween)
 		},
-		// onLoad() {
-		// 	this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
-		// 	this.uid = this.userInfo
-		// 	this.getHistoryList();
-		// },
 		onLoad(options) {
 			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			// 获取URL参数
 			const uid = options.uid;
 			if (uid == 0) {
 				this.uid = this.userInfo
 			} else {
 				this.uid = uid
 			}
+			console.log(111111,this.uid)
 			dayjs.extend(isBetween)
 			this.getHistoryList();
 		},

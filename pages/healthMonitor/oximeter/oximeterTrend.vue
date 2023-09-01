@@ -125,10 +125,11 @@
 			// 获取URL参数
 			const uid = options.uid;
 			if (uid == 0) {
-				this.uid = this.userInfo.uid
+				this.uid = this.userInfo
 			} else {
 				this.uid = uid
 			}
+			console.log(111111,this.uid)
 			dayjs.extend(isBetween);
 			this.getHistoryList();
 
