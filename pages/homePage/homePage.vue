@@ -100,14 +100,15 @@
 		//第一次加载
 		onLoad() {
 			console.log(uni.getStorageSync('userInfo'), 111)
-			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
-			this.uid = this.userInfo
+			// this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+			// this.uid = this.userInfo
 			console.log('onLoad', this.uid)
 			// 隐藏原生的tabbar
 			uni.hideTabBar();
+			this.token = uni.getStorageSync('access-token')
 
 			if (!this.token) {
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/login/login',
 				})
 			}
@@ -125,7 +126,7 @@
 			getUserInfo() {
 				this.$http
 					.post('/user/info', {
-						id: this.uid,
+						id: uni.getStorageSync('userInfo'),
 					})
 					.then(res => {
 						console.log(res)
