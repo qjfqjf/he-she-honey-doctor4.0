@@ -166,15 +166,14 @@
                     }
                 
                 })
-                    localStorage.setItem('',this.data)
-                    localStorage.setItem('',this.date)
-                    localStorage.setItem('',this.did)
+                    uni.navigateTo({
+						url:'/pages/WorkOrderCoordination/WorkOrderCoordination'
+					})
             },
 			selectDoctor(){
                 let index = '服务人员'
                 // localStorage.setItem('data',this.data)
-                localStorage.setItem('date',this.date)
-                localStorage.setItem('did',this.did)
+                uni.setStorageSync('date',this.date)
 				uni.navigateTo({
 			    	url:'/pages/message/addressBook?title=' + index
 			  })
